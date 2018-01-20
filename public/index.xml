@@ -23,6 +23,18 @@ Nesse roteiro, todos os gráficos utilizarão como base o pacote ggplot2, e algu
     </item>
     
     <item>
+      <title>Sobre</title>
+      <link>/about/</link>
+      <pubDate>Sat, 20 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Olá!
+Sou a Melina, bióloga, mestre e doutoranda em Ecologia e Especialista em Laboratório no Departamento de Ecologia da USP.
+A ideia deste blog é compartilhar roteiros e curiosidades sobre análises de dados usando o R! Minha intensão é compartilhar as análises e comandos que vou aprendendo no dia-a-dia, mas no bom e velho português!
+Se quiser entrar em contato, conhecer meu trabalho em projetos de pesquisa, consultoria e publicações, por favor visite meu site pessoal.</description>
+    </item>
+    
+    <item>
       <title>A Plain Markdown Post</title>
       <link>/2016/12/30/a-plain-markdown-post/</link>
       <pubDate>Fri, 30 Dec 2016 21:49:57 -0700</pubDate>
@@ -30,15 +42,6 @@ Nesse roteiro, todos os gráficos utilizarão como base o pacote ggplot2, e algu
       <guid>/2016/12/30/a-plain-markdown-post/</guid>
       <description>This is a post written in plain Markdown (*.md) instead of R Markdown (*.Rmd). The major differences are:
  You cannot run any R code in a plain Markdown document, whereas in an R Markdown document, you can embed R code chunks (```{r}); A plain Markdown post is rendered through Blackfriday, and an R Markdown document is compiled by rmarkdown and Pandoc.  There are many differences in syntax between Blackfriday&amp;rsquo;s Markdown and Pandoc&amp;rsquo;s Markdown.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
     </item>
     
     <item>

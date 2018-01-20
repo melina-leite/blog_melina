@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://melinaleiteblog.netlify.com"
 languageCode = "en-us"
 title = "Melina Leite - Roteiros sobre R, análise de dados e Ecologia"
 theme = "hugo-lithium-theme"
@@ -12,12 +12,15 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [[menu.main]]
     name = "Sobre"
     url = "/about/"
+    weight = 1
 [[menu.main]]
     name = "GitHub"
     url = "https://github.com/rstudio/blog_melina"
+    weight = 2
 [[menu.main]]
-    name = "site"
+    name = "site pessoal"
     url = "https://melinaleite.weebly.com/"
+    weight = 3
 
 [params]
     description = "Roteiros em R sobre análises de dados em Ecologia."
@@ -32,7 +35,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     MathJaxVersion = "2.7.1"
 
     [params.logo]
-    url = "logo.png"
+    url = "Rlogo.png"
     width = 50
     height = 50
     alt = "Logo"

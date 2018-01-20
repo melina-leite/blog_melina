@@ -1,6 +1,14 @@
 ---
-title: "About"
-date: "2016-05-05T21:48:51-07:00"
+title: "Sobre"
+date: "2018-01-20"
 ---
 
-This is a "hello world" example website for the [**blogdown**](https://github.com/rstudio/blogdown) package. The theme was forked from [@jrutheiser/hugo-lithium-theme](https://github.com/jrutheiser/hugo-lithium-theme) and modified by [Yihui Xie](https://github.com/yihui/hugo-lithium-theme).
+Olá! 
+
+Sou a Melina, bióloga, mestre e doutoranda em Ecologia e Especialista em Laboratório no [Departamento de Ecologia da USP](http://ecologia.ib.usp.br/).
+
+A ideia deste blog é compartilhar roteiros e curiosidades sobre análises de dados usando o R! Minha intensão é compartilhar as análises e comandos que vou aprendendo no dia-a-dia, mas no bom e velho português! 
+
+Se quiser entrar em contato, conhecer meu trabalho em projetos de pesquisa, consultoria e publicações, por favor visite meu [**site pessoal**](https://melinaleite.weebly.com).
+
+
