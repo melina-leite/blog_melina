@@ -2,7 +2,7 @@
 title: Explorando dados ambientais em análises multivariadas
 author: Melina de Souza Leite
 date: '2018-01-21'
-bibliography: "../../data/refs.bib"
+bibliography: "../../data/2018-01-21-explorando-dados-ambientais-em-análises-multivariadas/refs.bib"
 slug: explorando-dados-ambientais-em-análises-multivariadas
 categories:
   - R
@@ -36,10 +36,10 @@ Para esse roteiro, eu utilizei os livros de @borcard_numerical_2011 (capítulo 2
 Vamos utilizar os dados disponibilizados em @borcard_numerical_2011 (baixe a planilha de dados ambientais [nesse link](https://drive.google.com/file/d/1WEubmNAlY73RkX2F0A7U9E36McQWl0Ra/view?usp=sharing) e a de dados das coordenadas geográficas dos pontos [nesse link](https://drive.google.com/file/d/1-ZIHoDYU-YIZ5fol_OxUOhGHZDGk-Kfh/view?usp=sharing)),  com dados ambientais coletados em diferentes pontos de um rio.
 
 ```{r, echo=F}
-env <- read.table("../../data/DoubsEnv.csv", header=T, sep=",")
-spa <- read.table("../../data/DoubsSpa.csv", header=T, sep=",", 
+env <- read.table("../../data/2018-01-21-explorando-dados-ambientais-em-análises-multivariadas/DoubsEnv.csv", header=T, sep=",")
+spa <- read.table("../../data/2018-01-21-explorando-dados-ambientais-em-análises-multivariadas/DoubsSpa.csv", header=T, sep=",", 
                   row.names = 1)
-source("../../data/panelutils.R")
+source("../../data/2018-01-21-explorando-dados-ambientais-em-análises-multivariadas/panelutils.R")
 ```
 ```{r, eval=F}
 env <- read.table("DoubsEnv.csv", header=T, sep=",")

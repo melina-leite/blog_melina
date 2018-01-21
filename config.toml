@@ -1,4 +1,4 @@
-baseurl = "https://melinaleiteblog.netlify.com"
+baseurl = "/"
 languageCode = "en-us"
 title = "Melina Leite - Roteiros sobre R, análise de dados e Ecologia"
 theme = "hugo-lithium-theme"

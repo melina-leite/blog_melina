@@ -28,7 +28,7 @@ library(DT)
 
 Recentemente, ao tentar fazer gráficos exploratórios de um grande conjunto de dados (~300 mil observações), fiz uma rápida busca na internet e achei alternativas interessantes aos histogramas de frequência e densidade e também aos famosos boxplots. Abaixo, apresento exemplos do que encontrei.
 
-Lembrando que o material deste roteiro (arquivo .Rmd) está disponível [neste repositório do GitHub](https://github.com/melina-leite/roteiro_plots_bigdata).
+Lembrando que o material deste roteiro (arquivo .Rmd) está disponível [neste repositório do GitHub](https://github.com/melina-leite/roteiros_blog).
 
 Nesse roteiro, todos os gráficos utilizarão como base o pacote `ggplot2`, e algumas manipulações dos dados com o pacote `dplyr`. Ah, e eu também uso o pacote `cowplot`para tornar os plots do ggplot estéticamente melhores.
 

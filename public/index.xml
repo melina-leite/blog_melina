@@ -43,5 +43,15 @@ Sou a Melina, bióloga, mestre e doutoranda em Ecologia e Especialista em Labora
 A ideia deste blog é compartilhar análises e comandos que aprendo no dia-a-da através de roteiros e curiosidades sobre análises de dados usando o R! Os roteiros são em português porque acredito que muito já se tem feito em inglês e às vezes é tão mais gostoso ler e aprender em nossa língua nativa.</description>
     </item>
     
+    <item>
+      <title>Autocorrelação espacial e correlogramas no R</title>
+      <link>/2017/04/17/correlogramas-tutorial/</link>
+      <pubDate>Mon, 17 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/04/17/correlogramas-tutorial/</guid>
+      <description>Buscando como fazer correlogramas no R para analisar alguns dados espaciais, eu criei este roteiro com algumas informações, pacotes e funções que encontrei. Este não pretende ser um roteiro completo, e se você tiver críticas, dúvida e sugestões, não hesite em me contactar.
+Inicio com uma explicação teórica superficial do que é autocorrelação espacial, para depois apresentar os pacotes no R com as funções que a analisam. Utilizo sempre exemplos em Ecologia, assim como as principais referências.</description>
+    </item>
+    
   </channel>
 </rss>

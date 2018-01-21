@@ -32,5 +32,15 @@ Lembrando que o material deste roteiro (arquivo .Rmd) está disponível neste re
 Nesse roteiro, todos os gráficos utilizarão como base o pacote ggplot2, e algumas manipulações dos dados com o pacote dplyr.</description>
     </item>
     
+    <item>
+      <title>Autocorrelação espacial e correlogramas no R</title>
+      <link>/2017/04/17/correlogramas-tutorial/</link>
+      <pubDate>Mon, 17 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/04/17/correlogramas-tutorial/</guid>
+      <description>Buscando como fazer correlogramas no R para analisar alguns dados espaciais, eu criei este roteiro com algumas informações, pacotes e funções que encontrei. Este não pretende ser um roteiro completo, e se você tiver críticas, dúvida e sugestões, não hesite em me contactar.
+Inicio com uma explicação teórica superficial do que é autocorrelação espacial, para depois apresentar os pacotes no R com as funções que a analisam. Utilizo sempre exemplos em Ecologia, assim como as principais referências.</description>
+    </item>
+    
   </channel>
 </rss>
