@@ -59,7 +59,7 @@
 
   <article class="article">
     
-    <span class="article-duration">4 min read</span>
+    <span class="article-duration">5 min read</span>
     
 
     <h1 class="article-title">Gráficos alternativos para grandes conjuntos de dados</h1>
@@ -186,20 +186,31 @@ library(lvplot)</code></pre>
 <p>Comecemos com os histogramas!</p>
 <div id="histogramas" class="section level1">
 <h1>Histogramas</h1>
-<p>O primeiro gráfico para comparar a distribuição de variáveis contínuas é o histograma de frequência ou densidade. Muitas vezes o que queremos fazer é comparar os histogramas em função de algum variável categórica, como no exemplo abaixo, onde criamos os histogramas da variável <code>TaxiOut</code><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> em funcão das companhias aéreas (<code>UniqueCarrier</code>).</p>
+<p>O primeiro gráfico para comparar a distribuição de variáveis contínuas é o histograma de frequência (Figura <a href="#fig:freq">1</a>) ou densidade (Figura <a href="#fig:densi">2</a>). Muitas vezes o que queremos fazer é comparar os histogramas em função de algum variável categórica, como no exemplo abaixo, onde criamos os histogramas da variável <code>TaxiOut</code><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> em funcão das companhias aéreas (<code>UniqueCarrier</code>).</p>
 <pre class="r"><code>hi &lt;- ggplot(ontime, aes(x = TaxiOut, fill = UniqueCarrier)) + 
   facet_wrap(~UniqueCarrier, scales = &quot;free&quot;) + #deixei as escalas livres
   scale_x_log10() +
   theme(legend.position = &quot;none&quot;)
 hi + geom_histogram()</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:freq"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/freq-1.png" alt="Histograma de frequência por companhia aérea." width="672" />
+<p class="caption">
+Figure 1: Histograma de frequência por companhia aérea.
+</p>
+</div>
 <pre class="r"><code>hi + geom_density()</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:densi"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/densi-1.png" alt="Histograma de densidade por companhia aérea." width="672" />
+<p class="caption">
+Figure 2: Histograma de densidade por companhia aérea.
+</p>
+</div>
+<p>Como os histogramas separados em cada plot, às vezes fica difícil compará-los para entender possíveis diferenças entre os grupos analisados.</p>
 </div>
 <div id="alternativa-1-ridgeline-plots" class="section level1">
 <h1>Alternativa 1: Ridgeline plots</h1>
-<p>Uma alternativa ao histograma de densidade são os ridgeline plots do pacote <code>ggridges</code> que são gráficos parcialmente sobrepostos criando a impressão de uma cadeia de montanhas. São gráficos particularmente bons para visualizar as mudanças na distribuiçào no tempo e espaço.</p>
-<p>Neste exemplo, vou ordenar as companhias aéreas por sua mediana.</p>
+<p>Uma alternativa ao histograma de densidade são os ridgeline plots do pacote <code>ggridges</code> que são gráficos parcialmente sobrepostos criando a impressão de uma cadeia de montanhas (Figura <a href="#fig:ridge">3</a>. São gráficos particularmente bons para visualizar as mudanças na distribuição no tempo e espaço, pois permite uma comparação visualmente mais fácil entre os grupos. Não deixe de olhar a vinheta do pacote para exemplos de customização.</p>
+<p>Neste exemplo, primeiro eu ordeno as companhias aéreas por sua mediana<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>.</p>
 <pre class="r"><code>library(ggridges)
 
 rplot &lt;- ontime %&gt;%
@@ -209,38 +220,71 @@ rplot &lt;- ontime %&gt;%
   theme(legend.position = &quot;none&quot;)
 
 rplot +  geom_density_ridges()</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:ridge"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/ridge-1.png" alt="Ridges plots formando uma cadeia de montanhas das densidades das distribuições dos dados para cada companhia aérea." width="672" />
+<p class="caption">
+Figure 3: Ridges plots formando uma cadeia de montanhas das densidades das distribuições dos dados para cada companhia aérea.
+</p>
+</div>
 <p>A altura de cada densidade pode ser ajustada para haver menos sobreposição:</p>
 <pre class="r"><code>rplot + geom_density_ridges(scale=1)</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:ridge2"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/ridge2-1.png" alt="Uma alternativa caso não queiramos as montanhas sobrepostas." width="672" />
+<p class="caption">
+Figure 4: Uma alternativa caso não queiramos as montanhas sobrepostas.
+</p>
+</div>
+<p>Também podemos usar as “montanhas” como frequências e não densidade, utilizando o argumento <code>stat = &quot;linline&quot;</code>.</p>
+<pre class="r"><code>rplot + geom_density_ridges2(stat=&quot;binline&quot;)</code></pre>
+<div class="figure" style="text-align: center">
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/ridge_freq-1.png" alt="Usando frequência ao invés da densidade." width="672" />
+<p class="caption">
+(#fig:ridge_freq)Usando frequência ao invés da densidade.
+</p>
+</div>
 </div>
 <div id="alternativa-2-violin-plots" class="section level1">
 <h1>Alternativa 2: violin plots</h1>
-<p>Outra alternativa, mais parecida com boxplots (tratados a seguir) é o violin plot (do próprio pacote do <code>ggplot2</code>).</p>
+<p>Outra alternativa, mais parecida com boxplots (tratados a seguir) é o violin plot (do próprio pacote do <code>ggplot2</code>), que é um plot de densidade espelhado (um lado é simétrico ao outro) mas disposto como se fosse um boxplot (Figura <a href="#fig:vio">5</a>.</p>
 <pre class="r"><code>vio &lt;- ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %&gt;%
   ggplot(aes(y = TaxiOut, x = UniqueCarrier, fill = UniqueCarrier)) +
   scale_y_log10() +
   theme(legend.position = &quot;none&quot;)
 vio + geom_violin()</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:vio"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/vio-1.png" alt="Um plot alternativo que combina a forma de boxplots com a informação de histogramas de densidade _em pé_." width="672" />
+<p class="caption">
+Figure 5: Um plot alternativo que combina a forma de boxplots com a informação de histogramas de densidade <em>em pé</em>.
+</p>
+</div>
 <p>Uma possibilidade é colocar boxplots (sem valores extremos para não poluir a figura) dentro do violin plot para facilitar encontrar a mediana e quartis:</p>
 <pre class="r"><code>vio + geom_violin() + geom_boxplot(width=0.4, outlier.alpha = 0)</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:viobox"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/viobox-1.png" alt="Há quem goste de colocar um boxplot dentro do violin plot para conseguir visualizar os quartis." width="672" />
+<p class="caption">
+Figure 6: Há quem goste de colocar um boxplot dentro do violin plot para conseguir visualizar os quartis.
+</p>
+</div>
 </div>
 <div id="boxplots" class="section level1">
 <h1>Boxplots</h1>
-<p>Os boxplots deixam de ser úteis quando o volume de dados aumenta (Hofmann et al. 2017), pois o que eles consideram valores extremos (outliers) aumenta linearmente com o tamanho amostral. E é por isso que no violinplot nós removemos os outliers do gráfico. Ainda sim é um dos gráficos mais utilizados para se observar distribiução dos dados (veja <a href="http://had.co.nz/stat645/project-03/boxplots.pdf">aqui</a> sobre 40 anos de história do boxplot).</p>
+<p>Os boxplots deixam de ser úteis quando o volume de dados aumenta (Hofmann et al. 2017), pois o que eles consideram valores extremos (outliers) aumenta linearmente com o tamanho amostral (Figura <a href="#fig:boxplot">7</a>. E é por isso que no violin plot nós removemos os outliers do gráfico. Ainda sim é um dos gráficos mais utilizados para se observar distribiução dos dados (veja <a href="http://had.co.nz/stat645/project-03/boxplots.pdf">aqui</a> sobre 40 anos de história do boxplot).</p>
 <pre class="r"><code>ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %&gt;%
   ggplot(aes(y = TaxiOut, x = UniqueCarrier, fill = UniqueCarrier)) +
   scale_y_log10() +
   theme(legend.position = &quot;none&quot;) +
   geom_boxplot()</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:boxplot"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/boxplot-1.png" alt="Um boxplot para muitos dados fica poluído com tantos outliers." width="672" />
+<p class="caption">
+Figure 7: Um boxplot para muitos dados fica poluído com tantos outliers.
+</p>
+</div>
 </div>
 <div id="alternativa-3-letter-value-plot" class="section level1">
 <h1>Alternativa 3: letter-value plot</h1>
 <p>Uma recém criada alternativa aos boxplots convencionais, são os <em>letter-value plots</em> (veja Hofmann et al. 2017), que estão disponíveis no pacote <code>lvplot</code>. Este plot é baseado na estimativa de quantis (outros que não o primeiro e terceiro como no boxplot). Entretanto, as estimativas somente são confiáveis se há bastante dados!</p>
-<p>Abaixo alguns exemplos de uso dos lv-plots, com diferentes opções para a largura dos plots:</p>
+<p>Abaixo alguns exemplos de uso dos lv-plots, com algumas opções para a largura dos plots:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>linear</code>: torna a largura de cada xaixa inversamente proporcional ao quantil (letter-value) que ele representa, ou seja, começando com os quartis, cada caixa subsequente será um passo mais fina do que a anterior.</p></li>
 <li><p><code>area</code>: torna a área de cada caixa proporcional ao número de observações nela.</p></li>
@@ -255,11 +299,21 @@ lv &lt;- ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %
 
 lv + geom_lv(aes(fill=..LV..), width.method = &quot;height&quot;) +
   scale_fill_lv() + ggtitle(&quot;Largura do plot `height`&quot;)</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="figure" style="text-align: center"><span id="fig:lvarea"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvarea-1.png" alt="Um exemplo de lvplot com largura area." width="672" />
+<p class="caption">
+Figure 8: Um exemplo de lvplot com largura area.
+</p>
+</div>
 <pre class="r"><code>lv + geom_lv(aes(fill=..LV..), width.method = &quot;linear&quot;) +
   scale_fill_lv() + ggtitle(&quot;Largura do plot `linear`&quot;)</code></pre>
-<p><img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Eu particularmente acho o gráfico com largura <code>height</code> o mais bonito!</p>
+<div class="figure" style="text-align: center"><span id="fig:lvlinear"></span>
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvlinear-1.png" alt="Um lvplot com largura do plot linear." width="672" />
+<p class="caption">
+Figure 9: Um lvplot com largura do plot linear.
+</p>
+</div>
+<p>Eu particularmente acho o gráfico com largura <code>height</code> o mais bonito![^3]</p>
 <p>Compare a diferença no número de valores extremos encontrados no boxplot comum e no lvplot!</p>
 </div>
 <div id="referencias" class="section level1">
@@ -269,7 +323,8 @@ lv + geom_lv(aes(fill=..LV..), width.method = &quot;height&quot;) +
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>O tempo de Taxi-out é definido como o tempo gasto por um vôo entre o tempo de desligamento real (AOBT) e o tempo de descolagem real (ATOT). Variável numérica do tempo de táxi em minutos.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>mas as medianas são bem parecidas então o efeito não fica tão legal quanto poderia.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>mas as medianas são bem parecidas então o efeito não fica tão legal quanto poderia.<a href="#fnref2">↩</a></p></li>
 </ol>
 </div>
 
