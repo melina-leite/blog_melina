@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>/2017/09/19/introducao-aos-modelos-mistos/</loc>
+    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/04/17/correlogramas-tutorial/</loc>
     <lastmod>2017-04-17T00:00:00+00:00</lastmod>
   </url>
@@ -42,6 +47,12 @@
   <url>
     <loc>/</loc>
     <lastmod>2018-01-21T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/modelos_mistos/</loc>
+    <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

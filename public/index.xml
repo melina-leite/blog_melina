@@ -44,6 +44,16 @@ A ideia deste blog é compartilhar análises e comandos que aprendo no dia-a-da 
     </item>
     
     <item>
+      <title>Introdução aos Modelos Mistos</title>
+      <link>/2017/09/19/introducao-aos-modelos-mistos/</link>
+      <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/19/introducao-aos-modelos-mistos/</guid>
+      <description>Introdução Esse roteiro é fruto de um grupo de discussões sobre modelos mistos da LAGE (IB - USP), escrito por mim, Marília Gaiarsa e Lucas Medeiros. O nosso objetivo é apresentar modelos lineares mistos e a sua aplicação usando dados ecológicos e o ambiente de programação R1.
+Nesse momento, você deve estar se perguntando: esse roteiro é para mim?! Para acompanhá-lo é interessante ter uma compreensão básica de análises estatísticas em R.</description>
+    </item>
+    
+    <item>
       <title>Autocorrelação espacial e correlogramas no R</title>
       <link>/2017/04/17/correlogramas-tutorial/</link>
       <pubDate>Mon, 17 Apr 2017 00:00:00 +0000</pubDate>
