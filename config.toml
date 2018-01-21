@@ -15,7 +15,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     weight = 1
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/rstudio/blog_melina"
+    url = "https://github.com/melina-leite"
     weight = 2
 [[menu.main]]
     name = "site pessoal"

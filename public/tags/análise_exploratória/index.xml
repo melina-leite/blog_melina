@@ -17,7 +17,7 @@
       <pubDate>Sun, 21 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/01/21/explorando-dados-ambientais-em-an%C3%A1lises-multivariadas/</guid>
-      <description>Neste roteiro, o primeiro de uma (possível) série de roteiro sobre análises multivariadas no R, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados.
+      <description>Neste roteiro, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados, muito pelo contrário!
 Para esse roteiro, eu utilizei os livros de Borcard, Gillet, and Legendre (2011) (capítulo 2), Manly and Navarro Alberto (2017) (Capítulo 3), Everitt and Hothorn (2011) (Capítulo 2).</description>
     </item>
     

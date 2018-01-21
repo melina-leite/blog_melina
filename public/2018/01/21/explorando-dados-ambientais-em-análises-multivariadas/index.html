@@ -45,7 +45,7 @@
     
     <li><a href="/about/">Sobre</a></li>
     
-    <li><a href="https://github.com/rstudio/blog_melina">GitHub</a></li>
+    <li><a href="https://github.com/melina-leite">GitHub</a></li>
     
     <li><a href="https://melinaleite.weebly.com/">site pessoal</a></li>
     
@@ -69,17 +69,15 @@
     
 
     <div class="article-content">
-      <p>Neste roteiro, o primeiro de uma (possível) série de roteiro sobre análises multivariadas no R, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados.</p>
+      <p>Neste roteiro, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados, muito pelo contrário!</p>
 <p>Para esse roteiro, eu utilizei os livros de <span class="citation">Borcard, Gillet, and Legendre (2011)</span> (capítulo 2), <span class="citation">Manly and Navarro Alberto (2017)</span> (Capítulo 3), <span class="citation">Everitt and Hothorn (2011)</span> (Capítulo 2). Vale a pena a leitura destes capítulos para aprofundamento!</p>
-<p>Para acompanhar este roteiro é preciso já entender um pouco do funcionamento da linguagem R.</p>
-<p>As análises exploratórias de dados são imprescindíveis no início de qualquer análises de dados, principalmente em dados multidimensionais. É quando o analista começa a tomar familiaridade com os dados e a entender melhor suas estruturas e padrões.</p>
 <div id="explorando-variaveis-ambientais-ao-longo-de-um-rio" class="section level1">
 <h1>Explorando variáveis ambientais ao longo de um rio</h1>
 <p>Vamos utilizar os dados disponibilizados em <span class="citation">Borcard, Gillet, and Legendre (2011)</span> (baixe a planilha de dados ambientais <a href="https://drive.google.com/file/d/1WEubmNAlY73RkX2F0A7U9E36McQWl0Ra/view?usp=sharing">nesse link</a> e a de dados das coordenadas geográficas dos pontos <a href="https://drive.google.com/file/d/1-ZIHoDYU-YIZ5fol_OxUOhGHZDGk-Kfh/view?usp=sharing">nesse link</a>), com dados ambientais coletados em diferentes pontos de um rio.</p>
 <pre class="r"><code>env &lt;- read.table(&quot;DoubsEnv.csv&quot;, header=T, sep=&quot;,&quot;)
 spa &lt;- read.table(&quot;DoubsSpa.csv&quot;, header=T, sep=&quot;,&quot;, row.names = 1)</code></pre>
 <table>
-<caption><span id="tab:unnamed-chunk-3">Table 1: </span>Visualização das primeiras linhas dos dados ambientais. A coluna X identifica o local de coleta e cada coluna corresponde à uma variável ambiental medida. Para mais informações sobre os dados ver em Borcard et al. (2011).</caption>
+<caption><span id="tab:unnamed-chunk-3">Table 1: </span>Visualização das primeiras linhas dos dados ambientais.</caption>
 <thead>
 <tr class="header">
 <th align="right">X</th>

@@ -27,14 +27,9 @@ opts_chunk$set(
 options(formatR.arrow = TRUE, width = 90)
 ```
 
-Neste roteiro, o primeiro de uma (possível) série de roteiro sobre análises multivariadas no R, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados.
+Neste roteiro, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados, muito pelo contrário!
 
 Para esse roteiro, eu utilizei os livros de @borcard_numerical_2011 (capítulo 2), @manly_multivariate_2017 (Capítulo 3), @everitt_introduction_2011 (Capítulo 2). Vale a pena a leitura destes capítulos para aprofundamento!
-
-Para acompanhar este roteiro é preciso já entender um pouco do funcionamento da linguagem R.
-
-As análises exploratórias de dados são imprescindíveis no início de qualquer análises de dados, principalmente em dados multidimensionais. É quando o analista começa a tomar familiaridade com os dados e a entender melhor suas estruturas e padrões.
-
 
 # Explorando variáveis ambientais ao longo de um rio
 
@@ -52,7 +47,7 @@ spa <- read.table("DoubsSpa.csv", header=T, sep=",", row.names = 1)
 ```
 
 ```{r, echo=F}
-kable(head(env), caption="Visualização das primeiras linhas dos dados ambientais. A coluna X identifica o local de coleta e cada coluna corresponde à uma variável ambiental medida. Para mais informações sobre os dados ver em Borcard et al. (2011).")
+kable(head(env), caption="Visualização das primeiras linhas dos dados ambientais.")
 ```
 
 Vamos observar a planilha de dados ambientais:
