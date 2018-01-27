@@ -15,3 +15,4 @@ Se quiser entrar em contato, conhecer meu trabalho em projetos de pesquisa, cons
 
 Para erros, equívocos, comentários e sugestões, por favor, **me escreva** (melina.leite@ib.usp.br)!
 
+OBS: A maioria dos roteiros também está disponível do site do [Rpubs](http://rpubs.com/melinatarituba) em um outro formato de visualização.
