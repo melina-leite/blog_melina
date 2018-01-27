@@ -283,7 +283,7 @@ text(env[,3], env[,12], env$X)
 par(mfrow=c(1,1))
 ```
 
-Nestes plots, já podemos observar que existem pares de variáveis com _outliers bivariados_ em alguns locais (identificados com os números nos plots). Podemos ver que, quando as variáveis não são correlacionadas, o formato do boxplot bivariado é praticmante um círculo, como acontece entre altitude e pH.
+Nestes plots, já podemos observar que existem pares de variáveis com _outliers bivariados_ em alguns locais (identificados com os números nos plots). Podemos ver que, quando as variáveis não são correlacionadas, o formato do boxplot bivariado é praticamente um círculo, como acontece entre altitude e pH.
 
 # Referências consultadas
 
