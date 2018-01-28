@@ -74,9 +74,9 @@ Como os histogramas separados em cada plot, às vezes fica difícil compará-los
 
 Uma alternativa ao histograma de densidade são os ridgeline plots do pacote `ggridges` que são gráficos parcialmente sobrepostos criando a impressão de uma cadeia de montanhas (Figura \@ref(fig:ridge). São gráficos particularmente bons para visualizar as mudanças na distribuição no tempo e espaço, pois permite uma comparação visualmente mais fácil entre os grupos. Não deixe de olhar a vinheta do pacote para exemplos de customização.
 
-Neste exemplo, primeiro eu ordeno as companhias aéreas por sua mediana[^1].
+Neste exemplo, primeiro eu ordeno as companhias aéreas por sua mediana[^2].
 
-[^1]: mas as medianas são bem parecidas então o efeito não fica tão legal quanto poderia.
+[^2]: como as medianas são bem parecidas, o efeito não fica tão legal quanto poderia...
 
 ```{r ridge, fig.cap= "Ridges plots formando uma cadeia de montanhas das densidades das distribuições dos dados para cada companhia aérea."}
 library(ggridges)
