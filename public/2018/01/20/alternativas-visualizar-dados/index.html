@@ -284,11 +284,11 @@ Figure 7: Um boxplot para muitos dados fica poluído com tantos outliers.
 <div id="alternativa-3-letter-value-plot" class="section level1">
 <h1>Alternativa 3: letter-value plot</h1>
 <p>Uma recém criada alternativa aos boxplots convencionais, são os <em>letter-value plots</em> (veja Hofmann et al. 2017), que estão disponíveis no pacote <code>lvplot</code>. Este plot é baseado na estimativa de quantis (outros que não o primeiro e terceiro como no boxplot). Entretanto, as estimativas somente são confiáveis se há bastante dados!</p>
-<p>Abaixo alguns exemplos de uso dos lv-plots, com algumas opções para a largura dos plots:</p>
+<p>Abaixo alguns exemplos de uso dos <em>lvplots</em>, com algumas opções para a largura das caixas:</p>
 <ol style="list-style-type: decimal">
-<li><p><code>linear</code>: torna a largura de cada xaixa inversamente proporcional ao quantil (letter-value) que ele representa, ou seja, começando com os quartis, cada caixa subsequente será um passo mais fina do que a anterior.</p></li>
-<li><p><code>area</code>: torna a área de cada caixa proporcional ao número de observações nela.</p></li>
-<li><p><code>height</code>: torna a largura de cada caixa proporcional ao número de pontos nela.</p></li>
+<li><p><code>linear</code>: torna a largura de cada caixa inversamente proporcional ao quantil (letter-value) que ela representa, ou seja, começando com os quartis, cada caixa subsequente será um passo mais fina do que a anterior.</p></li>
+<li><p><code>area</code>: torna a <em>área</em> de cada caixa proporcional ao número de observações nela.</p></li>
+<li><p><code>height</code>: torna a <em>largura</em> de cada caixa proporcional ao número de pontos nela.</p></li>
 </ol>
 <pre class="r"><code>library(lvplot)
 library(patchwork) # para fazer painel com vários plots
@@ -298,22 +298,22 @@ lv &lt;- ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %
   theme(legend.position = &quot;none&quot;)
 
 lv + geom_lv(aes(fill=..LV..), width.method = &quot;height&quot;) +
-  scale_fill_lv() + ggtitle(&quot;Largura do plot `height`&quot;)</code></pre>
+  scale_fill_lv() + ggtitle(&quot;Largura da caixa `height`&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:lvarea"></span>
-<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvarea-1.png" alt="Um exemplo de lvplot com largura area." width="672" />
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvarea-1.png" alt="Um exemplo de lvplot com largura da caixa `height." width="672" />
 <p class="caption">
-Figure 8: Um exemplo de lvplot com largura area.
+Figure 8: Um exemplo de lvplot com largura da caixa `height.
 </p>
 </div>
 <pre class="r"><code>lv + geom_lv(aes(fill=..LV..), width.method = &quot;linear&quot;) +
-  scale_fill_lv() + ggtitle(&quot;Largura do plot `linear`&quot;)</code></pre>
+  scale_fill_lv() + ggtitle(&quot;Largura da caixa `linear`&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:lvlinear"></span>
-<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvlinear-1.png" alt="Um lvplot com largura do plot linear." width="672" />
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvlinear-1.png" alt="Um lvplot com largura da caixa linear." width="672" />
 <p class="caption">
-Figure 9: Um lvplot com largura do plot linear.
+Figure 9: Um lvplot com largura da caixa linear.
 </p>
 </div>
-<p>Eu particularmente acho o gráfico com largura <code>height</code> o mais bonito![^3]</p>
+<p>Eu particularmente acho o gráfico com largura <code>height</code> o mais bonito<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>!</p>
 <p>Compare a diferença no número de valores extremos encontrados no boxplot comum e no lvplot!</p>
 </div>
 <div id="referencias" class="section level1">
@@ -325,6 +325,7 @@ Figure 9: Um lvplot com largura do plot linear.
 <ol>
 <li id="fn1"><p>O tempo de Taxi-out é definido como o tempo gasto por um vôo entre o tempo de desligamento real (AOBT) e o tempo de descolagem real (ATOT). Variável numérica do tempo de táxi em minutos.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>como as medianas são bem parecidas, o efeito não fica tão legal quanto poderia…<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Apesar de ainda achar as cores padrão não tão bonitas.<a href="#fnref3">↩</a></p></li>
 </ol>
 </div>
 
