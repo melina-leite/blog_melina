@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.33" />
+
+
+<title>Matrizes de gráficos para relações entre variáveis - Melina Leite - Roteiros sobre R, análise de dados e Ecologia</title>
+<meta property="og:title" content="Matrizes de gráficos para relações entre variáveis - Melina Leite - Roteiros sobre R, análise de dados e Ecologia">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/Rlogo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">Sobre</a></li>
+    
+    <li><a href="https://github.com/melina-leite">GitHub</a></li>
+    
+    <li><a href="https://melinaleite.weebly.com/">site pessoal</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">6 min read</span>
+    
+
+    <h1 class="article-title">Matrizes de gráficos para relações entre variáveis</h1>
+
+    
+    <span class="article-date">2018/01/28</span>
+    
+
+    <div class="article-content">
+      <p>É muito comum que tenhamos um conjunto de dados com muitas variáveis e queiramos saber a relação entres estas variáveis, por exemplo, quais são mais ou menos correlacionadas entre si (positiva ou negativamente) ou se as correlações são parecidas entre si (matriz de correlação estruturada) ou todas bem diferentes (matriz não estruturada).</p>
+<p>Avaliar as relações entre variáveis de interesse é um dos primeiros passos na análise de dados!</p>
+<p>Neste roteiro, pretendo explorar algumas ferramentas gráficas para visualizar as relações entre variáveis.</p>
+<p>Para fazer esse roteiro, é esperado que o leitor já saiba o que é uma <a href="https://pt.wikipedia.org/wiki/Correla%C3%A7%C3%A3o">correlação</a> entre duas variáveis e tenha conhecimento básico de R.</p>
+<p>Neste roteiro vamos utilizar os dados <code>swiss</code> e <code>iris</code> disponíveis no pacote <code>datasets</code> que vem com o Rbase. Para detalhes destes conjuntos de dados usar: <code>help(swiss)</code> e <code>help(iris)</code>.</p>
+<pre class="r"><code>data(swiss)
+data(iris)</code></pre>
+<p>A primeira função a se utilizar é a <code>cor()</code>, que vai gerar uma matriz de correlações entre as variáveis. Lembrando que essa função nos dá 3 métodos diferentes para calcular correlações, que vão depender da natureza dos dados. A correlação de <strong>Pearson</strong> é a padrão, usada para dados quantitativos contínuos. Há também a de <strong>Spearman</strong> e <strong>Kendall</strong> que são medidas de associação bseadas na ordenação dos dados.</p>
+<pre class="r"><code>knitr::kable(cor(swiss))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Fertility</th>
+<th align="right">Agriculture</th>
+<th align="right">Examination</th>
+<th align="right">Education</th>
+<th align="right">Catholic</th>
+<th align="right">Infant.Mortality</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fertility</td>
+<td align="right">1.0000000</td>
+<td align="right">0.3530792</td>
+<td align="right">-0.6458827</td>
+<td align="right">-0.6637889</td>
+<td align="right">0.4636847</td>
+<td align="right">0.4165560</td>
+</tr>
+<tr class="even">
+<td>Agriculture</td>
+<td align="right">0.3530792</td>
+<td align="right">1.0000000</td>
+<td align="right">-0.6865422</td>
+<td align="right">-0.6395225</td>
+<td align="right">0.4010951</td>
+<td align="right">-0.0608586</td>
+</tr>
+<tr class="odd">
+<td>Examination</td>
+<td align="right">-0.6458827</td>
+<td align="right">-0.6865422</td>
+<td align="right">1.0000000</td>
+<td align="right">0.6984153</td>
+<td align="right">-0.5727418</td>
+<td align="right">-0.1140216</td>
+</tr>
+<tr class="even">
+<td>Education</td>
+<td align="right">-0.6637889</td>
+<td align="right">-0.6395225</td>
+<td align="right">0.6984153</td>
+<td align="right">1.0000000</td>
+<td align="right">-0.1538589</td>
+<td align="right">-0.0993218</td>
+</tr>
+<tr class="odd">
+<td>Catholic</td>
+<td align="right">0.4636847</td>
+<td align="right">0.4010951</td>
+<td align="right">-0.5727418</td>
+<td align="right">-0.1538589</td>
+<td align="right">1.0000000</td>
+<td align="right">0.1754959</td>
+</tr>
+<tr class="even">
+<td>Infant.Mortality</td>
+<td align="right">0.4165560</td>
+<td align="right">-0.0608586</td>
+<td align="right">-0.1140216</td>
+<td align="right">-0.0993218</td>
+<td align="right">0.1754959</td>
+<td align="right">1.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>Muitos vão concordar que é muito mais interessante olhar para gráficos do que números! Então vamos às funções para visualização gráfica das correlações.</p>
+<div id="matriz-de-graficos-no-r-base" class="section level1">
+<h1>Matriz de gráficos no R Base</h1>
+<p>O gráfico de Draftman (<em>Draftman’s plot</em>), também conhecido como matriz de gráficos (tradução minha para <em>scatterplot matrix</em>) ou gráficos de pares (<a href="http://www.tandfonline.com/doi/pdf/10.1080/10618600.2012.694762?needAccess=true"><em>pairs plot</em></a>), pode ser computado no R com a simples função <code>pairs()</code>.</p>
+<pre class="r"><code>pairs(swiss)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Com esse plot conseguimos observar os gráficos de dispersão para cada par de variáveis e entender melhor os números que aparecem na matriz de correlação. Porém, esta matriz é redundante ao repetir informação nas diagonais, deixando de lado informações interessantes. Por exemplo, podemos colocar histogramas de frequência nas diagonais para visualizar a distribuição dos dados em cada variável. Para isso, carregamos a função abaixo, <code>panel.hist()</code>.</p>
+<pre class="r"><code>#função retirada do help(pairs)
+panel.hist &lt;- function(x, ...)
+{
+  usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+  par(usr = c(usr[1:2], 0, 1.5) )
+  h &lt;- hist(x, plot = FALSE)
+  breaks &lt;- h$breaks; nB &lt;- length(breaks)
+  y &lt;- h$counts; y &lt;- y/max(y)
+  rect(breaks[-nB], 0, breaks[-1], y, col = &quot;cyan&quot;, ...)
+}</code></pre>
+<pre class="r"><code>pairs(swiss, diag.panel = panel.hist)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Outra modificação pode ser colocar os coeficientes das correlações em um dos painéis triangulares, condicionando o tamanho dos números ao valor da correlação.</p>
+<pre class="r"><code>#função retirada do help(pairs)
+panel.cor &lt;- function(x, y, digits = 2, prefix = &quot;&quot;, cex.cor, ...)
+{
+  usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r &lt;- abs(cor(x, y))
+  txt &lt;- format(c(r, 0.123456789), digits = digits)[1]
+  txt &lt;- paste0(prefix, txt)
+  if(missing(cex.cor)) cex.cor &lt;- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * r)
+}</code></pre>
+<pre class="r"><code>pairs(swiss, diag.panel = panel.hist, upper.panel = panel.cor)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>E por fim, podemos visualizar melhor a forma da associação entre as variáveis colocando uma linha de suavização nos gráficos (método <a href="https://en.wikipedia.org/wiki/Local_regression">LOWESS</a>), permitindo avaliar se a relação é linear, ou pelo menos monotônica.</p>
+<pre class="r"><code>#panel.smooth já existe como função no R
+pairs(swiss, diag.panel = panel.hist, upper.panel = panel.cor,
+      lower.panel = panel.smooth)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>A partir dos exemplos de funções acima, podemos criar outras que nos agrade mais e que nos ajude a entender melhor os gráficos. Por exemplo, se quisermos colocar uma reta de regressão nos gráficos de dispersão ao invés da curva LOWESS, podemos modificar a função panel.smooth.</p>
+<pre class="r"><code>panel.lm &lt;- function (x, y, col = par(&quot;col&quot;), bg = NA, pch = par(&quot;pch&quot;), 
+    cex = 1, col.line=&quot;red&quot;) {
+    points(x, y, pch = pch, col = col, bg = bg, cex = cex)
+    ok &lt;- is.finite(x) &amp; is.finite(y)
+    if (any(ok)) {
+       abline(lm(y[ok]~x[ok]), col = col.line)
+    }
+}</code></pre>
+<pre class="r"><code>pairs(swiss, diag.panel = panel.hist, upper.panel = panel.cor,
+      lower.panel = panel.lm)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="matriz-de-graficos-no-pacote-ggally" class="section level1">
+<h1>Matriz de gráficos no pacote <code>GGally</code></h1>
+<p>Este pacote é baseado no pacote <code>ggplot2</code>, que é uma outra maneira de se fazer gráficos no R. Além de muitas outras funcionalidades interessantes (ver <a href="http://ggobi.github.io/ggally/index.html">documentação</a>), o <code>GGally</code> também tem uma função análoga ao <code>pairs()</code>.</p>
+<p>Essa função é boa quando também temos variáveis categóricas, por exemplo no conjunto de dados <code>iris</code> que tem medidas de 3 espécies diferentes.</p>
+<pre class="r"><code>library(GGally)
+ggpairs(iris, lower = list(continuous = &quot;smooth&quot;))</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Ou podemos comparar as medidas entre espécies com os valores das correlações, histogramas e gráficos de dispersão para cada espécie.</p>
+<pre class="r"><code>ggpairs(iris, columns = 1:4, ggplot2::aes(colour=Species))</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>O legal da função <code>ggpairs()</code> é brincar com as diferentes formas de representar as variáveis nos painéis. Para isso, mexemos nos argumentos <code>upper</code>, <code>lower</code> e <code>diag</code>, que tem uma opção para cada tipo de relação entre variáveis: <code>continous</code> vai descrever o que plotar entre duas variáveis contínuas; <code>combo</code> entre uma contínua e uma discreta e <code>discrete</code> entre duas variáveis discretas. Vale a pena olhar o <a href="http://ggobi.github.io/ggally/rd.html">material do pacote</a> e testar diferentes combinações!</p>
+</div>
+<div id="matriz-de-graficos-em-outros-pacotes" class="section level1">
+<h1>Matriz de gráficos em outros pacotes</h1>
+<p>Temos também variantes do <code>pairs()</code> no pacote <code>car</code> (função <code>scatterPlotMatrix()</code>) e no pacote <code>lattice</code> (função <code>splom()</code>). Na função <code>scatterPlotMatrix()</code> é possível usar a variável categórica para separar os valores das contínuas como feito em <code>ggpairs()</code>. Abaixo, só para não deixar de apresentar, eu coloco exemplos das funções sem explorar muito seus argumentos.</p>
+<pre class="r"><code>car::spm(~ Sepal.Length + Sepal.Width +  Petal.Length|Species, 
+         data = iris,
+        by.group=TRUE)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lattice::splom(iris)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="matrizes-de-correlacao-tipo-heatmaps" class="section level1">
+<h1>Matrizes de correlação tipo heatmaps</h1>
+<p>Uma outra forma de apresentar as relações (nesse caso, correlações) entre as variáveis quantitativas (aqui não entram as categóricas), é usando gráficos que se assemelham aos gráficos de “calor” (<em>heatmaps</em>), onde as cores de cada correlação vão indicar a força e o sinal da correlação.</p>
+<p>Eu encontrei 2 pacotes que fazem gráficos bem parecidos: <code>corrgram</code> (veja <a href="https://cran.r-project.org/web/packages/corrgram/vignettes/corrgram_examples.html">aqui</a> e <a href="http://www.tandfonline.com/doi/pdf/10.1198/000313002533?needAccess=true">aqui</a>) e <code>corrplot</code>(veja <a href="https://cran.r-project.org/web/packages/corrplot/vignettes/corrplot-intro.html">aqui</a>). E também existe a função <code>ggcorr()</code> do pacote <a href="https://briatte.github.io/ggcorr/">GGally</a>. Vale a pena olhar os links dos pacotes e funções para ter uma ideia melhor das funcionalidades e customizações gráficas disponíveis.</p>
+<p>A desvantagem que vejo deste tipo de matriz de gráficos é que não vemos a nuvem de pontos dos dados originais para avaliar a forma da relação além do valor da correlação. Mas as funções possuem outras funcionalidades como por exemplo, reagrupar as variáveis para que as mais parecidas fiquem próximas, podendo inclusive utilizar técnicas de agrupamento entre as variáveis.</p>
+<p>Vamos começar com a função mais simples <code>ggcorr()</code>.</p>
+<pre class="r"><code>ggcorr(swiss, label=T)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Com o pacote <code>corrplot</code> temos muito mais funcionalidades gráficas e detalhes para apresentar as correlações, como por exemplo 7 tipos de visualização gráfica: círculos, quadrados, elipses, números, sombras, cores e gráficos de pizza.</p>
+<pre class="r"><code>library(corrplot)
+# primeiro fazemos a matriz de correlação
+M &lt;- cor(swiss)
+corrplot(M, method = &quot;circle&quot;)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Com essa função é possível reordenar a matriz de acordo com os coeficientes de correlação. Existem alguns métodos para isso, vamos ficar com o método de agrupamento hierárquico (<code>hclust</code>) que também tem diferentes métodos envolvidos (todos podem ser acessados pelos argumentos da função). Com este método, podemos desenhar retângulos criando N grupos de variáveis mais correlacionadas .</p>
+<pre class="r"><code>corrplot(M, order = &quot;hclust&quot;, addrect = 3, tl.pos=&quot;d&quot;)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Já no pacote <code>corrgram</code> o plot padrão (<em>default</em>) não me parece muito atraente (veja abaixo), mas a função <code>corrgram</code> permite muita flexibilidade na construção gráfica, inclusive fazendo os plots parecidos com o <code>pairs()</code>.</p>
+<pre class="r"><code>#plot padrão
+library(corrgram)
+corrgram(swiss)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>corrgram(swiss, lower.panel = panel.pts, upper.panel= panel.conf, diag.panel = panel.density)</code></pre>
+<p><img src="/post/2018-01-28-matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Enfim, estes foram alguns exemplos de como criar gráficos com todas tuas variáveis de interesse ao mesmo tempo de forma a entender melhor os dados e suas relações!</p>
+<p>Boas análises!</p>
+</div>
+
+    </div>
+  </article>
+
+  <div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://larnsce.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

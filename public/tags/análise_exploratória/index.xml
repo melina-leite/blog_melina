@@ -2,21 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Análise_exploratória on Melina Leite - Roteiros sobre R, análise de dados e Ecologia</title>
-    <link>https://melinaleiteblog.netlify.com/tags/an%C3%A1lise_explorat%C3%B3ria/</link>
+    <link>/tags/an%C3%A1lise_explorat%C3%B3ria/</link>
     <description>Recent content in Análise_exploratória on Melina Leite - Roteiros sobre R, análise de dados e Ecologia</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <language>pt-br</language>
+    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://melinaleiteblog.netlify.com/tags/an%C3%A1lise_explorat%C3%B3ria/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/an%C3%A1lise_explorat%C3%B3ria/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Matrizes de gráficos para relações entre variáveis</title>
+      <link>/2018/01/28/matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis/</link>
+      <pubDate>Sun, 28 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/01/28/matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis/</guid>
+      <description>É muito comum que tenhamos um conjunto de dados com muitas variáveis e queiramos saber a relação entres estas variáveis, por exemplo, quais são mais ou menos correlacionadas entre si (positiva ou negativamente) ou se as correlações são parecidas entre si (matriz de correlação estruturada) ou todas bem diferentes (matriz não estruturada).
+Avaliar as relações entre variáveis de interesse é um dos primeiros passos na análise de dados!
+Neste roteiro, pretendo explorar algumas ferramentas gráficas para visualizar as relações entre variáveis.</description>
+    </item>
+    
+    <item>
       <title>Explorando dados ambientais em análises multivariadas</title>
-      <link>https://melinaleiteblog.netlify.com/2018/01/21/explorando-dados-ambientais-em-an%C3%A1lises-multivariadas/</link>
+      <link>/2018/01/21/explorando-dados-ambientais-em-an%C3%A1lises-multivariadas/</link>
       <pubDate>Sun, 21 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://melinaleiteblog.netlify.com/2018/01/21/explorando-dados-ambientais-em-an%C3%A1lises-multivariadas/</guid>
+      <guid>/2018/01/21/explorando-dados-ambientais-em-an%C3%A1lises-multivariadas/</guid>
       <description>Neste roteiro, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados, muito pelo contrário!
 Para esse roteiro, eu utilizei os livros de Borcard, Gillet, and Legendre (2011) (capítulo 2), Manly and Navarro Alberto (2017) (Capítulo 3), Everitt and Hothorn (2011) (Capítulo 2).</description>
     </item>
