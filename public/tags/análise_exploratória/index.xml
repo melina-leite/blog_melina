@@ -6,10 +6,20 @@
     <description>Recent content in Análise_exploratória on Melina Leite - Roteiros sobre R, análise de dados e Ecologia</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>pt-br</language>
-    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 05 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/an%C3%A1lise_explorat%C3%B3ria/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Diagnóstico de valores extremos em dados multivariados</title>
+      <link>/2018/02/05/diagn%C3%B3stico-de-valores-extremos-em-dados-multivariados/</link>
+      <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/05/diagn%C3%B3stico-de-valores-extremos-em-dados-multivariados/</guid>
+      <description>Uma das maneiras mais comuns de se observar valores extremos (outliers) em nossos dados é usar o gráfico de boxplot em cada variável de interesse (veja no link como o boxplot é usado para classificar valores extremos).
+Entretanto, quando temos dados multivariados é interessante observar os valores extremos de maneira conjunta, isto é, levando em consideração todas as variáveis dos dados. Neste caso, os boxplots univariados não nos servem mais1. Detectar valores extremos em observações univariadas é diferente de detectá-los de maneira multivariada e o que era um outlier em uma variável pode não ser mais num contexo multivariado e vice-versa.</description>
+    </item>
     
     <item>
       <title>Matrizes de gráficos para relações entre variáveis</title>

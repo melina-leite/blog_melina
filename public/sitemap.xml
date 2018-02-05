@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/02/05/diagn%C3%B3stico-de-valores-extremos-em-dados-multivariados/</loc>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/01/28/matrizes-de-gr%C3%A1ficos-para-rela%C3%A7%C3%B5es-entre-vari%C3%A1veis/</loc>
     <lastmod>2018-01-28T00:00:00+00:00</lastmod>
   </url>
@@ -40,7 +45,7 @@
   
   <url>
     <loc>/tags/an%C3%A1lise_explorat%C3%B3ria/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -51,7 +56,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -62,20 +67,26 @@
   </url>
   
   <url>
+    <loc>/tags/multivariada/</loc>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/plot/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
