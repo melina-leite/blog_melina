@@ -3,7 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/02/05/testando-homocedasticidade-em-dados-multivariados/</loc>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/02/05/diagn%C3%B3stico-de-valores-extremos-em-dados-multivariados/</loc>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/02/05/testando-normalidade-multivariadas/</loc>
     <lastmod>2018-02-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -80,6 +90,12 @@
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2018-02-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/premissas/</loc>
     <lastmod>2018-02-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
