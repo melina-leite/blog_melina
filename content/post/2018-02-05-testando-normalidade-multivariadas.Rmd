@@ -2,7 +2,7 @@
 title: Testando normalidade multivariadas
 author: Melina de Souza Leite
 date: '2018-02-05'
-bibliography: refs.bib
+bibliography: "../../data/2018-02-05-testando-normalidade-multivariadas/refs.bib"
 slug: testando-normalidade-multivariadas
 categories:
   - R

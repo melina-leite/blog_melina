@@ -2,7 +2,7 @@
 title: 'Testando homocedasticidade em dados multivariados'
 author: Melina de Souza Leite
 date: '2018-02-05'
-bibliography: refs.bib
+bibliography: "../../data/2018-02-05-testando-homocedasticidade-em-dados-multivariados/refs.bib"
 slug: testando-homocedasticidade-em-dados-multivariados
 categories:
   - R
@@ -21,11 +21,10 @@ opts_chunk$set(
   warning = F, message = F, error = F, cache = T
 )
 options(formatR.arrow = TRUE, width = 90)
+
+pardais <- read.csv("../../data/2018-02-05-testando-homocedasticidade-em-dados-multivariados/Bumpus sparrows.csv",header=TRUE)
 ```
 
-<!---
-AINDA PRECISA COLOCAR OS LINKS DE ROTEIROS ANTERIORES - normalidade multivariada
---->
 
 Muitos testes de hipótese multivariados (ver [este roteiro]()) baseiam-se na homocedasticidade das matrizes de covariância, que é o análogo multivariado da homogeneidade de variâncias em testes de hipótese univariados (por exemplo, usando o teste de [Levene](https://en.wikipedia.org/wiki/Levene%27s_test) para avaliar homocedasticidade univariada). 
 
@@ -35,7 +34,7 @@ Neste roteiro vamos abordar dois tipos de testes para avaliar se as matrizes de 
 
 Como exemplo, vamos utilizar os dados de medidas morfológicas de pardais que sobreviveram e que não sobreviveram à uma tempestado disponibilizados no material que acompanha o livro de @manly_multivariate_2017 (baixe os dados [aqui](https://www.researchgate.net/publication/311283141_R_code_and_data_sets)).
 
-```{r}
+```{r, eval=F}
 pardais <- read.csv("Bumpus sparrows.csv",header=TRUE)
 ```
 

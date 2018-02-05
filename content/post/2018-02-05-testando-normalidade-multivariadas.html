@@ -2,6 +2,7 @@
 title: Testando normalidade multivariadas
 author: Melina de Souza Leite
 date: '2018-02-05'
+bibliography: "../../data/2018-02-05-testando-normalidade-multivariadas/refs.bib"
 slug: testando-normalidade-multivariadas
 categories:
   - R
@@ -13,4 +14,181 @@ tags:
 
 
 
+<p>Em diversas análises de dados quantitativos multivariados existe a premissa de que a distribuição dos dados segue uma <strong>normal multiviariada</strong>. Outras abordagens, mesmo não exigindo, são beneficiadas quando os dados são multinormais ou pelo menos, não assimétricos (distribuições com caudas longas).</p>
+<p>Abaixo descrevo brevemente algumas formas de se testar e verificar graficamente a normalidade multivariada. Vale a pena ver o roteiro de <a href="http://rpubs.com/melinatarituba/356726">deteção de valores extremos</a> que irá ajudar a entender melhor os dados, já que muitas vezes a presença de <em>outliers multivariados</em> é responsável pela “não-normalidade” dos dados.</p>
+<p>Nesse roteiro utilizarei principalmente o pacote <a href="https://pdfs.semanticscholar.org/5508/25b2681f1cc067c66df6ddbd62c74b441869.pdf?_ga=2.25175998.286279602.1517010562-1528935492.1517010562"><code>MVN</code></a>.</p>
+<div id="testando-normalidade-em-cada-variavel-separadamente" class="section level1">
+<h1>Testando normalidade em cada variável separadamente</h1>
+<p>Geralmente, a primeira inspeção dos dados é observar gráficos e testes de normalidade para cada variável separadamente.</p>
+<p>Vamos usar os dados <code>swiss</code> do pacote <code>datasets</code><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p>
+<p>O primeiro gráfico são os histogramas de frequência de cada variável. As curvas em vermelho indicam uma suposta distribuição normal ao qual os dados se ajustariam.</p>
+<pre class="r"><code>library(MVN)
 
+uniPlot(swiss, &quot;histogram&quot;)</code></pre>
+<p><img src="/post/2018-02-05-testando-normalidade-multivariadas_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Boxplots também ajudam a observar a distribuição dos dados e possíveis valores extremos (<em>outliers</em>).</p>
+<pre class="r"><code>uniPlot(swiss, &quot;box&quot;)</code></pre>
+<p><img src="/post/2018-02-05-testando-normalidade-multivariadas_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Mas talvez o gráfico mais importante para observar normalidade é o gráfico quantil-quantil (<code>qqplot</code>).</p>
+<pre class="r"><code>uniPlot(swiss, &quot;qqplot&quot;)</code></pre>
+<p><img src="/post/2018-02-05-testando-normalidade-multivariadas_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>No qqplot, variáveis que seguem uma distribuição normal deveriam manter-se sobre a linha reta desenhada no gráfico.</p>
+<p>Com todos estes gráficos, vemos que a variável <code>Catholic</code> está bem distante de uma normal pois tem uma distribuição muito achatada (“kurtosis”), e que <code>Education</code> tem uma cauda muito longa tornando a distribuição assimétrica (“skewness”).</p>
+<p>Agora, vamos olhar os testes de normalidade de <a href="https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test">Shapiro-Wilk</a>, que é um dos mais recomendáveis (<span class="citation">(<span class="citeproc-not-found" data-reference-id="legendre_numerical_2012"><strong>???</strong></span>)</span>).</p>
+<pre class="r"><code>uniteste &lt;- uniNorm(swiss)
+uniteste$`Shapiro-Wilk&#39;s Normality Test`</code></pre>
+<pre><code>##           Variable Statistic   p-value Normality
+## 1    Fertility        0.9731    0.3449    YES   
+## 2   Agriculture       0.9664    0.1930    YES   
+## 3   Examination       0.9696    0.2563    YES   
+## 4    Education        0.7482    0.0000    NO    
+## 5     Catholic        0.7463    0.0000    NO    
+## 6 Infant.Mortality    0.9776    0.4978    YES</code></pre>
+<p>Confirmando as observações gráficas, as duas variáveis identificadas como distantes da distribuição normal são <code>Catholic</code> e <code>Education</code>.</p>
+<p>Entretanto, mostrar normalidade separadamente em cada variável não garante que haja normalidade multivariada quando consideramos todas as variáveis ao mesmo tempo. Se queremos usar os dados em análises multivariadas, precisamos testar a normalidade multivariada com todas as variáveis conjuntamente.</p>
+</div>
+<div id="normalidade-multivariada" class="section level1">
+<h1>Normalidade multivariada</h1>
+<p>Existem diferentes testes para normalidade multivariada, e aqui vamos analisar 3 destes que são recomendáveis e disponíveis no pacote <code>MVA</code>. Para detalhes de como são calculados estes testes veja a <a href="https://pdfs.semanticscholar.org/5508/25b2681f1cc067c66df6ddbd62c74b441869.pdf?_ga=2.25175998.286279602.1517010562-1528935492.1517010562">publicação do pacote</a>.</p>
+<div id="teste-de-mardia" class="section level2">
+<h2>Teste de Mardia</h2>
+<p>É um teste baseado nas extensões multivariadas para assimetria (<em>skewness</em>) e curtose (“achatamento”, <em>kurtosis</em>) e foi recomendado por <span class="citation">(<span class="citeproc-not-found" data-reference-id="shipley_cause_2004"><strong>???</strong></span>)</span> no contexto de análies de modelos de equações estruturais.</p>
+<p>Usando a função <code>mardiaTest</code>, temos os resultados para a assimetria multivariada (primeiro conjunto de resultados), para a assimetria corrigida para pequeno tamanho amostral (último cojunto de dados) e para o achatamente (curtose). Aparentemente, o que mais “atrapalha” a multinormalidade é a assimetria.</p>
+<pre class="r"><code>library(MVN)
+mardiaTest(swiss)</code></pre>
+<pre><code>##    Mardia&#39;s Multivariate Normality Test 
+## --------------------------------------- 
+##    data : swiss 
+## 
+##    g1p            : 13.73383 
+##    chi.skew       : 107.5817 
+##    p.value.skew   : 4.165067e-05 
+## 
+##    g2p            : 49.6851 
+##    z.kurtosis     : 0.5895342 
+##    p.value.kurt   : 0.555503 
+## 
+##    chi.small.skew : 116.5295 
+##    p.value.small  : 3.842232e-06 
+## 
+##    Result          : Data are not multivariate normal. 
+## ---------------------------------------</code></pre>
+<p>Nos testes univariados vimos que <code>Education</code> era a variável com maior assimetria na distribuição. E se transformarmos apenas esta variável em seu log?</p>
+<pre class="r"><code>mardiaTest(cbind(swiss[,-4], log(swiss[,4])))</code></pre>
+<pre><code>##    Mardia&#39;s Multivariate Normality Test 
+## --------------------------------------- 
+##    data : cbind(swiss[, -4], log(swiss[, 4])) 
+## 
+##    g1p            : 9.776641 
+##    chi.skew       : 76.58368 
+##    p.value.skew   : 0.03523741 
+## 
+##    g2p            : 45.78532 
+##    z.kurtosis     : -0.7748081 
+##    p.value.kurt   : 0.438453 
+## 
+##    chi.small.skew : 82.95331 
+##    p.value.small  : 0.01113958 
+## 
+##    Result          : Data are not multivariate normal. 
+## ---------------------------------------</code></pre>
+<p>Continuamos com assimetria multivariada!</p>
+<p>Aparentemente não é só <code>Education</code> que está deixando os dados “não multinormais”. É preciso entender melhor a natureza dos dados e possíveis transformações para garantir a multinormalidade do conjunto de dados.</p>
+<p>Apenas como exercício, vamos remover <code>Education</code> e <code>Catholic</code> para ver se estas variável são as “vilãs” da multinormalidade.</p>
+<pre class="r"><code>mardiaTest(swiss[,-c(4:5)])</code></pre>
+<pre><code>##    Mardia&#39;s Multivariate Normality Test 
+## --------------------------------------- 
+##    data : swiss[, -c(4:5)] 
+## 
+##    g1p            : 3.110959 
+##    chi.skew       : 24.36918 
+##    p.value.skew   : 0.2266377 
+## 
+##    g2p            : 24.54781 
+##    z.kurtosis     : 0.2710368 
+##    p.value.kurt   : 0.7863627 
+## 
+##    chi.small.skew : 26.58939 
+##    p.value.small  : 0.1472164 
+## 
+##    Result         : Data are multivariate normal. 
+## ---------------------------------------</code></pre>
+<p>Bingo!</p>
+</div>
+<div id="teste-de-henze-zirklers" class="section level2">
+<h2>Teste de Henze-Zirklers</h2>
+<p>Este teste está baseado na <a href="https://en.wikipedia.org/wiki/Mahalanobis_distance">distância de Mahalanobis</a> entre cada observação e o centróide da distribuição e também na distância de Mahalanobis entre as observações (veja <a href="http://rpubs.com/melinatarituba/356726">esse roteiro</a> para mais detalhes).</p>
+<pre class="r"><code>hzTest(swiss)</code></pre>
+<pre><code>##   Henze-Zirkler&#39;s Multivariate Normality Test 
+## --------------------------------------------- 
+##   data : swiss 
+## 
+##   HZ      : 1.206095 
+##   p-value : 1.701432e-07 
+## 
+##   Result  : Data are not multivariate normal. 
+## ---------------------------------------------</code></pre>
+<p>O resultado deste teste está de acordo com o resultado do teste de Mardia. Vejamos no exemplo em que excluímos as variáveis “problemáticas”.</p>
+<pre class="r"><code>hzTest(swiss[,-c(4:5)])</code></pre>
+<pre><code>##   Henze-Zirkler&#39;s Multivariate Normality Test 
+## --------------------------------------------- 
+##   data : swiss[, -c(4:5)] 
+## 
+##   HZ      : 0.9210898 
+##   p-value : 0.07180992 
+## 
+##   Result  : Data are multivariate normal. 
+## ---------------------------------------------</code></pre>
+</div>
+<div id="teste-de-royston" class="section level2">
+<h2>Teste de Royston</h2>
+<p>O teste de Royston baseia-se na estatística de Shapiro-Wilk<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> para testar a normalidade multivariada.</p>
+<pre class="r"><code>roystonTest(swiss)</code></pre>
+<pre><code>##   Royston&#39;s Multivariate Normality Test 
+## --------------------------------------------- 
+##   data : swiss 
+## 
+##   H       : 44.76704 
+##   p-value : 6.97814e-09 
+## 
+##   Result  : Data are not multivariate normal. 
+## ---------------------------------------------</code></pre>
+<pre class="r"><code>roystonTest(swiss[,-c(4:5)])</code></pre>
+<pre><code>##   Royston&#39;s Multivariate Normality Test 
+## --------------------------------------------- 
+##   data : swiss[, -c(4:5)] 
+## 
+##   H       : 4.006097 
+##   p-value : 0.2813429 
+## 
+##   Result  : Data are multivariate normal. 
+## ---------------------------------------------</code></pre>
+</div>
+</div>
+<div id="conclusao" class="section level1">
+<h1>Conclusão</h1>
+<p>Em nosso exemplo, todos os 3 diferentes testes de normalidade multivariada convergiram em seus resultados, o que significa maior confiança nos resultados. Mas tão importante quanto fazer os testes é fazer o gráfico qqplot para a normalidade multivariada. Nas funções de testes usadas acima, temos a opção de visualização gráfica do qqplot com o argumento <code>qqplot=TRUE</code>.</p>
+<pre class="r"><code>#podemos usar qualquer uma das funções de teste para fazer o qqplot
+hzTest(swiss, qqplot=T)</code></pre>
+<pre><code>##   Henze-Zirkler&#39;s Multivariate Normality Test 
+## --------------------------------------------- 
+##   data : swiss 
+## 
+##   HZ      : 1.206095 
+##   p-value : 1.701432e-07 
+## 
+##   Result  : Data are not multivariate normal. 
+## ---------------------------------------------</code></pre>
+<p><img src="/post/2018-02-05-testando-normalidade-multivariadas_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Observando o plot, podemos supor que possam existir dados extremos que estejam levando à distribuição multivariada não se conformar com a normalidade, portanto, também é importante verificar nos dados os possíveis <a href="http://rpubs.com/melinatarituba/356726"><em>outliers multivariados</em></a> na tentativa de entender melhor os dados em mãos para fazer melhores escolhas de análises.</p>
+</div>
+<div id="referencias" class="section level1">
+<h1>Referências</h1>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>que não precisa ser carregado porque já vem junto como R base.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>ou Shapiro-Francia dependendo do valor de curtose.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
