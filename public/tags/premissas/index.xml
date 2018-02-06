@@ -17,7 +17,7 @@
       <pubDate>Mon, 05 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/02/05/testando-homocedasticidade-em-dados-multivariados/</guid>
-      <description>Muitos testes de hipótese multivariados (ver este roteiro) baseiam-se na homocedasticidade das matrizes de covariância, que é o análogo multivariado da homogeneidade de variâncias em testes de hipótese univariados (por exemplo, usando o teste de Levene para avaliar homocedasticidade univariada).
+      <description>Muitos testes de hipótese multivariados baseiam-se na homocedasticidade das matrizes de covariância, que é o análogo multivariado da homogeneidade de variâncias em testes de hipótese univariados (por exemplo, usando o teste de Levene para avaliar homocedasticidade univariada).
 Neste roteiro vamos abordar dois tipos de testes para avaliar se as matrizes de covariância são homogêneas em testes de hipótese comparando médias em diferentes grupos.
 Dados Como exemplo, vamos utilizar os dados de medidas morfológicas de pardais que sobreviveram e que não sobreviveram à uma tempestado disponibilizados no material que acompanha o livro de Manly and Navarro Alberto (2017) (baixe os dados aqui).</description>
     </item>

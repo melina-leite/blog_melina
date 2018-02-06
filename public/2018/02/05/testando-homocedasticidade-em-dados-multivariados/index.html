@@ -69,7 +69,7 @@
     
 
     <div class="article-content">
-      <p>Muitos testes de hipótese multivariados (ver <a href="">este roteiro</a>) baseiam-se na homocedasticidade das matrizes de covariância, que é o análogo multivariado da homogeneidade de variâncias em testes de hipótese univariados (por exemplo, usando o teste de <a href="https://en.wikipedia.org/wiki/Levene%27s_test">Levene</a> para avaliar homocedasticidade univariada).</p>
+      <p>Muitos testes de hipótese multivariados baseiam-se na homocedasticidade das matrizes de covariância, que é o análogo multivariado da homogeneidade de variâncias em testes de hipótese univariados (por exemplo, usando o teste de <a href="https://en.wikipedia.org/wiki/Levene%27s_test">Levene</a> para avaliar homocedasticidade univariada).</p>
 <p>Neste roteiro vamos abordar dois tipos de testes para avaliar se as matrizes de covariância são homogêneas em testes de hipótese comparando médias em diferentes grupos.</p>
 <div id="dados" class="section level1">
 <h1>Dados</h1>
@@ -138,7 +138,7 @@ mardiaTest(pardais[,-1], qqplot=T)</code></pre>
 </div>
 <div id="metodo-permdist-uma-generalizacao-do-teste-de-levene-univariado" class="section level1">
 <h1>Método PERMDIST: uma generalização do teste de Levene univariado</h1>
-<p>Podemos também comparar a homocedasticidade multivariada com uma generalização do teste de homogeneidade de variâncias de Levene proposto por Anderson (2006). Esta proposta está baseada na distância das observações aos centróides dos grupos no espaço multivariado (<a href="">distância de mahalanobis</a>). Para testar se as variâncias dos grupos são diferentes, as distâncias entre as observações dos grupos ao centróide do grupo são comparadas por ANOVA. Quando usamos a distância euclidiana, temos o análogo multivariado do teste de Levene, mas é possível usar outras distâncias.</p>
+<p>Podemos também comparar a homocedasticidade multivariada com uma generalização do teste de homogeneidade de variâncias de Levene proposto por Anderson (2006). Esta proposta está baseada na distância das observações aos centróides dos grupos no espaço multivariado (<a href="http://melinaleiteblog.netlify.com/2018/02/05/diagn%C3%B3stico-de-valores-extremos-em-dados-multivariados/">distância de mahalanobis</a>). Para testar se as variâncias dos grupos são diferentes, as distâncias entre as observações dos grupos ao centróide do grupo são comparadas por ANOVA. Quando usamos a distância euclidiana, temos o análogo multivariado do teste de Levene, mas é possível usar outras distâncias.</p>
 <p>A função <code>betadisper()</code> do pacote <code>vegan</code> faz o teste e o <code>help(betadisper)</code> provém bastante informação interessante sobre essa abordagem, vale a pena conferir!</p>
 <pre class="r"><code>library(vegan)
 pardist &lt;- dist(pardais[,-1], &quot;euclidian&quot;)
