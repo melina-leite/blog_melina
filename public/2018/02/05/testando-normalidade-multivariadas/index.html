@@ -89,7 +89,7 @@ uniPlot(swiss, &quot;histogram&quot;)</code></pre>
 <p><img src="/post/2018-02-05-testando-normalidade-multivariadas_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>No qqplot, variáveis que seguem uma distribuição normal deveriam manter-se sobre a linha reta desenhada no gráfico.</p>
 <p>Com todos estes gráficos, vemos que a variável <code>Catholic</code> está bem distante de uma normal pois tem uma distribuição muito achatada (“kurtosis”), e que <code>Education</code> tem uma cauda muito longa tornando a distribuição assimétrica (“skewness”).</p>
-<p>Agora, vamos olhar os testes de normalidade de <a href="https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test">Shapiro-Wilk</a>, que é um dos mais recomendáveis (<span class="citation">(<span class="citeproc-not-found" data-reference-id="legendre_numerical_2012"><strong>???</strong></span>)</span>).</p>
+<p>Agora, vamos olhar os testes de normalidade de <a href="https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test">Shapiro-Wilk</a>, que é um dos mais recomendáveis (<span class="citation">P. Legendre and Legendre (2012)</span>).</p>
 <pre class="r"><code>uniteste &lt;- uniNorm(swiss)
 uniteste$`Shapiro-Wilk&#39;s Normality Test`</code></pre>
 <pre><code>##           Variable Statistic   p-value Normality
@@ -107,7 +107,7 @@ uniteste$`Shapiro-Wilk&#39;s Normality Test`</code></pre>
 <p>Existem diferentes testes para normalidade multivariada, e aqui vamos analisar 3 destes que são recomendáveis e disponíveis no pacote <code>MVA</code>. Para detalhes de como são calculados estes testes veja a <a href="https://pdfs.semanticscholar.org/5508/25b2681f1cc067c66df6ddbd62c74b441869.pdf?_ga=2.25175998.286279602.1517010562-1528935492.1517010562">publicação do pacote</a>.</p>
 <div id="teste-de-mardia" class="section level2">
 <h2>Teste de Mardia</h2>
-<p>É um teste baseado nas extensões multivariadas para assimetria (<em>skewness</em>) e curtose (“achatamento”, <em>kurtosis</em>) e foi recomendado por <span class="citation">(<span class="citeproc-not-found" data-reference-id="shipley_cause_2004"><strong>???</strong></span>)</span> no contexto de análies de modelos de equações estruturais.</p>
+<p>É um teste baseado nas extensões multivariadas para assimetria (<em>skewness</em>) e curtose (“achatamento”, <em>kurtosis</em>) e foi recomendado por <span class="citation">Shipley (2004)</span> no contexto de análies de modelos de equações estruturais.</p>
 <p>Usando a função <code>mardiaTest</code>, temos os resultados para a assimetria multivariada (primeiro conjunto de resultados), para a assimetria corrigida para pequeno tamanho amostral (último cojunto de dados) e para o achatamente (curtose). Aparentemente, o que mais “atrapalha” a multinormalidade é a assimetria.</p>
 <pre class="r"><code>library(MVN)
 mardiaTest(swiss)</code></pre>
@@ -237,8 +237,16 @@ hzTest(swiss, qqplot=T)</code></pre>
 <p><img src="/post/2018-02-05-testando-normalidade-multivariadas_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Observando o plot, podemos supor que possam existir dados extremos que estejam levando à distribuição multivariada não se conformar com a normalidade, portanto, também é importante verificar nos dados os possíveis <a href="http://rpubs.com/melinatarituba/356726"><em>outliers multivariados</em></a> na tentativa de entender melhor os dados em mãos para fazer melhores escolhas de análises.</p>
 </div>
-<div id="referencias" class="section level1">
+<div id="referencias" class="section level1 unnumbered">
 <h1>Referências</h1>
+<div id="refs" class="references">
+<div id="ref-legendre_numerical_2012">
+<p>Legendre, P, and L Legendre. 2012. <em>Numerical Ecology 3rd</em>. 3rd ed.</p>
+</div>
+<div id="ref-shipley_cause_2004">
+<p>Shipley, Bill. 2004. <em>Cause and Correlation in Biology: A User ’ S Guide to Path Analysis, Structural Equations and Causal Inference</em>. Vol. 20. 2001.</p>
+</div>
+</div>
 </div>
 <div class="footnotes">
 <hr />
