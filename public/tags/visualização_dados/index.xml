@@ -39,8 +39,7 @@ Para esse roteiro, eu utilizei os livros de Borcard, Gillet, and Legendre (2011)
       
       <guid>/2018/01/20/alternativas-visualizar-dados/</guid>
       <description>Recentemente, ao tentar fazer gráficos exploratórios de um grande conjunto de dados (~300 mil observações), fiz uma rápida busca na internet e achei alternativas interessantes aos histogramas de frequência e densidade e também aos famosos boxplots. Abaixo, apresento exemplos do que encontrei.
-Lembrando que o material deste roteiro (arquivo .Rmd) está disponível neste repositório do GitHub.
-Nesse roteiro, todos os gráficos utilizarão como base o pacote ggplot2, e algumas manipulações dos dados com o pacote dplyr.</description>
+Nesse roteiro, todos os gráficos utilizarão como base o pacote ggplot2, e algumas manipulações dos dados com o pacote dplyr. Ah, e eu também uso o pacote cowplotpara tornar os plots do ggplot estéticamente melhores.</description>
     </item>
     
   </channel>

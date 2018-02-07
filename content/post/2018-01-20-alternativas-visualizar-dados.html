@@ -17,13 +17,12 @@ language:
 
 
 <p>Recentemente, ao tentar fazer gráficos exploratórios de um grande conjunto de dados (~300 mil observações), fiz uma rápida busca na internet e achei alternativas interessantes aos histogramas de frequência e densidade e também aos famosos boxplots. Abaixo, apresento exemplos do que encontrei.</p>
-<p>Lembrando que o material deste roteiro (arquivo .Rmd) está disponível <a href="https://github.com/melina-leite/roteiros_blog">neste repositório do GitHub</a>.</p>
 <p>Nesse roteiro, todos os gráficos utilizarão como base o pacote <code>ggplot2</code>, e algumas manipulações dos dados com o pacote <code>dplyr</code>. Ah, e eu também uso o pacote <code>cowplot</code>para tornar os plots do ggplot estéticamente melhores.</p>
 <pre class="r"><code>library(ggplot2)
 library(dplyr)
 library(cowplot)
 library(lvplot)</code></pre>
-<p>Usarei o conjunto de dados <code>ontime</code> do pacote <code>lvplot</code>, que detalha o desempenho no horário dos vôos nacionais dos EUA em janeiro de 2015, veja uma amostra dos dados na Tabela <a href="#tab:dados">1</a>.</p>
+<p>Vamos usar o conjunto de dados <code>ontime</code> do pacote <code>lvplot</code>, que detalha o desempenho no horário dos vôos nacionais dos EUA em janeiro de 2015, veja uma amostra dos dados na Tabela <a href="#tab:dados">1</a>.</p>
 <table>
 <caption><span id="tab:dados">Table 1: </span>Algumas linhas da tabela de dados.</caption>
 <thead>
@@ -156,7 +155,7 @@ Figure 2: Histograma de densidade por companhia aérea.
 </div>
 <div id="alternativa-1-ridgeline-plots" class="section level1">
 <h1>Alternativa 1: Ridgeline plots</h1>
-<p>Uma alternativa ao histograma de densidade são os ridgeline plots do pacote <code>ggridges</code> que são gráficos parcialmente sobrepostos criando a impressão de uma cadeia de montanhas (Figura <a href="#fig:ridge">3</a>. São gráficos particularmente bons para visualizar as mudanças na distribuição no tempo e espaço, pois permite uma comparação visualmente mais fácil entre os grupos. Não deixe de olhar a vinheta do pacote para exemplos de customização.</p>
+<p>Uma alternativa ao histograma de densidade são os ridgeline plots do pacote <code>ggridges</code> que são gráficos parcialmente sobrepostos criando a impressão de uma cadeia de montanhas (Figura <a href="#fig:ridge">3</a>). São gráficos particularmente bons para visualizar as mudanças na distribuição no tempo e espaço, pois permite uma comparação visualmente mais fácil entre os grupos. Não deixe de olhar a vinheta do pacote para exemplos de customização.</p>
 <p>Neste exemplo, primeiro eu ordeno as companhias aéreas por sua mediana<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>.</p>
 <pre class="r"><code>library(ggridges)
 
@@ -192,7 +191,7 @@ Figure 4: Uma alternativa caso não queiramos as montanhas sobrepostas.
 </div>
 <div id="alternativa-2-violin-plots" class="section level1">
 <h1>Alternativa 2: violin plots</h1>
-<p>Outra alternativa, mais parecida com boxplots (tratados a seguir) é o violin plot (do próprio pacote do <code>ggplot2</code>), que é um plot de densidade espelhado (um lado é simétrico ao outro) mas disposto como se fosse um boxplot (Figura <a href="#fig:vio">5</a>.</p>
+<p>Outra alternativa, mais parecida com boxplots (tratados a seguir) é o violin plot (do próprio pacote do <code>ggplot2</code>), que é um plot de densidade espelhado (lados simétricos) mas disposto como se fosse um boxplot (Figura <a href="#fig:vio">5</a>).</p>
 <pre class="r"><code>vio &lt;- ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %&gt;%
   ggplot(aes(y = TaxiOut, x = UniqueCarrier, fill = UniqueCarrier)) +
   scale_y_log10() +
@@ -215,7 +214,7 @@ Figure 6: Há quem goste de colocar um boxplot dentro do violin plot para conseg
 </div>
 <div id="boxplots" class="section level1">
 <h1>Boxplots</h1>
-<p>Os boxplots deixam de ser úteis quando o volume de dados aumenta (Hofmann et al. 2017), pois o que eles consideram valores extremos (outliers) aumenta linearmente com o tamanho amostral (Figura <a href="#fig:boxplot">7</a>. E é por isso que no violin plot nós removemos os outliers do gráfico. Ainda sim é um dos gráficos mais utilizados para se observar distribiução dos dados (veja <a href="http://had.co.nz/stat645/project-03/boxplots.pdf">aqui</a> sobre 40 anos de história do boxplot).</p>
+<p>Os boxplots deixam de ser úteis quando o volume de dados aumenta (Hofmann et al. 2017), pois o que eles consideram valores extremos (outliers) aumenta linearmente com o tamanho amostral (Figura <a href="#fig:boxplot">7</a>). E é por isso que no violin plot nós removemos os <em>outliers</em> do gráfico. Ainda sim é um dos gráficos mais utilizados para se observar distribuição dos dados (veja <a href="http://had.co.nz/stat645/project-03/boxplots.pdf">aqui</a> sobre 40 anos de história do boxplot).</p>
 <pre class="r"><code>ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %&gt;%
   ggplot(aes(y = TaxiOut, x = UniqueCarrier, fill = UniqueCarrier)) +
   scale_y_log10() +
@@ -247,9 +246,9 @@ lv &lt;- ontime %&gt;% mutate(group = reorder(UniqueCarrier, TaxiOut, median)) %
 lv + geom_lv(aes(fill=..LV..), width.method = &quot;height&quot;) +
   scale_fill_lv() + ggtitle(&quot;Largura da caixa `height`&quot;)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:lvarea"></span>
-<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvarea-1.png" alt="Um exemplo de lvplot com largura da caixa `height." width="672" />
+<img src="/post/2018-01-20-alternativas-visualizar-dados_files/figure-html/lvarea-1.png" alt="Um exemplo de lvplot com largura da caixa height." width="672" />
 <p class="caption">
-Figure 8: Um exemplo de lvplot com largura da caixa `height.
+Figure 8: Um exemplo de lvplot com largura da caixa height.
 </p>
 </div>
 <pre class="r"><code>lv + geom_lv(aes(fill=..LV..), width.method = &quot;linear&quot;) +
@@ -272,6 +271,6 @@ Figure 9: Um lvplot com largura da caixa linear.
 <ol>
 <li id="fn1"><p>O tempo de Taxi-out é definido como o tempo gasto por um vôo entre o tempo de desligamento real (AOBT) e o tempo de descolagem real (ATOT). Variável numérica do tempo de táxi em minutos.<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>como as medianas são bem parecidas, o efeito não fica tão legal quanto poderia…<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>Apesar de ainda achar as cores padrão não tão bonitas.<a href="#fnref3">↩</a></p></li>
+<li id="fn3"><p>Apesar de ainda achar as cores padrão não tão bonitas, mas com umas linhas a mais de código resolvemos esse problema.<a href="#fnref3">↩</a></p></li>
 </ol>
 </div>
