@@ -89,7 +89,7 @@ text(x=c(1,1,1,0.8,1.2),
            y=swiss[out(swiss[,4]),4]-c(3,-2,2,1,-1), 
            label= rownames(swiss[out(swiss[,4]),]))
 par(mfrow=c(1,1))</code></pre>
-<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/fig1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Para <code>Examination</code> não encontramos outliers segundo o método do boxplot, mas para <code>Education</code> temos 5 valores extremos.</p>
 <p>Vamos agora desenhar um <strong>boxplot bivariado</strong> conforme <span class="citation">Everitt and Hothorn (2011)</span>. Os boxplots bivariados são baseados nos cálculos “robustos” das medidas de locação, escala e correlação e consiste em um par de elipses concêntricas, uma das quais inclui 50% dos dados e a outra que delinea o limite dos dados e deixa de fora os possíveis <em>outliers</em>. Também são desenhadas linhas de regressão de x em y e de y em x, com sua interseção mostrando o parâmetro de locação (média das duas variáveis). O ângulo entre as linhas de regressão serão tão pequenos quanto maior for a correlação entre as variáveis.</p>
 <p>Vamos usar a função <code>bvbox</code> do pacote <code>MVA</code> que acompanha o livro de <span class="citation">Everitt and Hothorn (2011)</span>, para observar a relação entre as variáveis.</p>
@@ -99,7 +99,7 @@ bvbox(swiss[,c(3,4)], xlab = colnames(swiss)[3],
 text(x = swiss[out(swiss[,4]),3], 
      y = swiss[out(swiss[,4]),4]-2.5, 
      rownames(swiss[out(swiss[,4]),]))</code></pre>
-<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/fig2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>No boxplot bivariado, detectamos os mesmos <em>outliers</em> encontrados apenas em <code>Education</code>.</p>
 <p>A desvantagem dos boxplots bivariados é que eles avaliam os outliers apenas para duas variáveis por vez e geralmente temos mais do que duas variáveis nos nossos dados. A seguir veremos uma forma mais geral de se avaliar os valores extremos multivariados.</p>
 </div>
@@ -121,7 +121,7 @@ abline(h=quant, lty=2)
 
 out &lt;- maha[maha&gt;quant]
 text(c(42,44,46,48)-7, out, names(out))</code></pre>
-<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/fig3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Desta forma, para o critério usando a distância de Mahalanobis, 4 observações foram consideradas <em>outliers</em> bivariados. Este critério está dizendo que as 4 observações com maior distância tem pouca probabilidade de serem advindas da população com distribuição normal bivariada assumida nos dados.</p>
 </div>
 <div id="diagnosticando-outliers-multivariados" class="section level1">
@@ -139,7 +139,7 @@ abline(h = quant2, lty = 2)
 
 out2 &lt;- maha2[maha2 &gt; quant2]
 text(c(2.5,15,34,38,40,44), out2, names(out2))</code></pre>
-<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/fig4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Com mais variáveis, tivemos diferentes observações detectadas como <em>outliers</em> e por isso a importância de se analisar os valores extremos em dados multivariados de maneira conjunta!</p>
 <div id="usando-pacote-mvn" class="section level2">
 <h2>Usando pacote <code>MVN</code></h2>
@@ -149,7 +149,7 @@ text(c(2.5,15,34,38,40,44), out2, names(out2))</code></pre>
 
 outliers &lt;- mvOutlier(swiss, alpha = 0.90, method = &quot;quan&quot;) 
 # tente method=&quot;adj.quan&quot;</code></pre>
-<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-02-05-diagno%CC%81stico-de-valores-extremos-em-dados-multivariados_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="observacoes-finais" class="section level1">

@@ -47,7 +47,7 @@ out <- function(x) {
 # OBS: é o critério usado na identificação dos oultiers nos boxplots
 ```
 
-```{r}
+```{r fig1}
 par(mfrow=c(1,2))
 boxplot(swiss$Examination, main = "Examination")
 boxplot(swiss$Education, main = "Education")
@@ -63,7 +63,7 @@ Para `Examination` não encontramos outliers segundo o método do boxplot, mas p
 Vamos agora desenhar um **boxplot bivariado** conforme @everitt_introduction_2011. Os boxplots bivariados são baseados nos cálculos "robustos" das medidas de locação, escala e correlação e consiste em um par de elipses concêntricas, uma das quais inclui 50% dos dados e a outra que delinea o limite dos dados e deixa de fora os possíveis _outliers_. Também são desenhadas linhas de regressão de x em y e de y em x, com sua interseção mostrando o parâmetro de locação (média das duas variáveis). O ângulo entre as linhas de regressão serão tão pequenos quanto maior for a correlação entre as variáveis.
 
 Vamos usar a função `bvbox` do pacote `MVA` que acompanha o livro de @everitt_introduction_2011, para observar a relação entre as variáveis.
-```{r}
+```{r fig2}
 library(MVA)
 bvbox(swiss[,c(3,4)], xlab = colnames(swiss)[3], 
       ylab = colnames(swiss)[4])
@@ -84,7 +84,7 @@ O [cálculo da distância de Mahalanobis](https://en.wikipedia.org/wiki/Mahalano
 
 Vamos calcular $D^2_M$ para cada observação dos dados apresentados acima, e plotar estas distâncias. Um critério para o diagnóstico dos outliers a partir da distância de Mahalanobis é verificar se a distância calculada está acima de um limiar $c^2$, que nada mais é do que a estatística do Qui-quadrado ($\chi^2$) calculada para um valor de probabilidade escolhido. No exemplo abaixo, eu escolhi um $\alpha$ de 10% e fui na distribuição de ($\chi^2$) com 2 graus de liberdade (g.l. = número de variáveis sendo analisadas) saber qual é o quantil e desenhei a linha pontilhada no gráfico com este valor. 
 
-```{r}
+```{r, fig3}
 maha <- mahalanobis(swiss[,3:4], # dados
           center = colMeans(swiss[,3:4]), # médias das variáveis
           cov = cov(swiss[,3:4])) # matriz de covariâncias
@@ -107,7 +107,7 @@ Desta forma, para o critério usando a distância de Mahalanobis, 4 observaçõe
 Agora vamos expandir nosso exemplo usando todas as variáveis existentes nos dados `swiss`.
 Aqui eu não vou fazer os boxplots bivariados (você já sabe como faz), mas quero apenas mostrar o plot da distância de Mahalanobis para ver se, com mais variáveis, temos diferentes outliers detectados. 
 
-```{r}
+```{r fig4}
 maha2 <- mahalanobis(swiss, center = colMeans(swiss), 
                      cov = cov(swiss))
 
