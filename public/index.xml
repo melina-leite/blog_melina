@@ -29,7 +29,7 @@ Entretanto, quando temos dados multivariados é interessante observar os valores
       <guid>/2018/02/05/testando-homocedasticidade-em-dados-multivariados/</guid>
       <description>Muitos testes de hipótese multivariados baseiam-se na homocedasticidade das matrizes de covariância, que é o análogo multivariado da homogeneidade de variâncias em testes de hipótese univariados (por exemplo, usando o teste de Levene para avaliar homocedasticidade univariada).
 Neste roteiro vamos abordar dois tipos de testes para avaliar se as matrizes de covariância são homogêneas em testes de hipótese comparando médias em diferentes grupos.
-DadosComo exemplo, vamos utilizar os dados de medidas morfológicas de pardais que sobreviveram e que não sobreviveram à uma tempestado disponibilizados no material que acompanha o livro de Manly and Navarro Alberto (2017) (baixe os dados aqui).</description>
+Dados Como exemplo, vamos utilizar os dados de medidas morfológicas de pardais que sobreviveram e que não sobreviveram à uma tempestado disponibilizados no material que acompanha o livro de Manly and Navarro Alberto (2017) (baixe os dados aqui).</description>
     </item>
     
     <item>
@@ -91,7 +91,7 @@ Os roteiros são em português porque acredito que muito já se tem feito em ing
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/09/19/introducao-aos-modelos-mistos/</guid>
-      <description>IntroduçãoEsse roteiro é fruto de um grupo de discussões sobre modelos mistos da LAGE (IB - USP), escrito por mim, Marília Gaiarsa e Lucas Medeiros. O nosso objetivo é apresentar modelos lineares mistos e a sua aplicação usando dados ecológicos e o ambiente de programação R1.
+      <description>Introdução Esse roteiro é fruto de um grupo de discussões sobre modelos mistos da LAGE (IB - USP), escrito por mim, Marília Gaiarsa e Lucas Medeiros. O nosso objetivo é apresentar modelos lineares mistos e a sua aplicação usando dados ecológicos e o ambiente de programação R1.
 Nesse momento, você deve estar se perguntando: esse roteiro é para mim?! Para acompanhá-lo é interessante ter uma compreensão básica de análises estatísticas em R.</description>
     </item>
     

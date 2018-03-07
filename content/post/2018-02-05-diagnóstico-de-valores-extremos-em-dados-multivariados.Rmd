@@ -18,8 +18,7 @@ library(knitr)
 
 opts_chunk$set(
   fig.align = "center", fig.show = "hold",
-  warning = F, message = F, error = F, cache = T
-)
+  warning = F, message = F, error = F, cache = T)
 options(formatR.arrow = TRUE, width = 90)
 ```
 
