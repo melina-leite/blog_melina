@@ -16,8 +16,7 @@ tags:
 knitr::opts_chunk$set(echo = T, warning = F, fig.align = "center", message = F, error = F, cache = TRUE)
 ```
 
-
-![](../../data/2022-07-22-dados-abertos/cartaz.jpg)
+(/post/2022-07-22-dados-abertos/cartaz.jpg)
 
 No dia 19 de julho de 2022, eu dei uma palestra híbrida (com platéia e transmitida ao vivo) no [EcoEncontros](https://ecoencontros.ib.usp.br/pt/), o ciclo de seminários do Programa de Pós-Graduação em Ecologia da USP. A palestra teve boa repercussão, gerou bastante discussão mesmo depois da gravação!
 
