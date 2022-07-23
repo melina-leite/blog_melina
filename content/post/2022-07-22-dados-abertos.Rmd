@@ -16,13 +16,6 @@ tags:
 knitr::opts_chunk$set(echo = T, warning = F, fig.align = "center", message = F, error = F, cache = TRUE)
 ```
 
-```{r}
-a=1
-b=2
-a+b
-```
-
-
 
 ![](../../data/2022-07-22-dados-abertos/cartaz.jpg)
 
