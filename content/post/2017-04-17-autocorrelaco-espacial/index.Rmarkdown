@@ -11,7 +11,8 @@ tags: ["analises_espaciais"]
 
 ```{r setup, include=FALSE}
 library(knitr)
-library(ncf); library(pgirmess); library(spdep)
+#library(ncf); library(spdep)
+#library(pgirmess); 
 library(vegan)
 
 knitr::opts_chunk$set(echo = T, warning = F, fig.align = "center", message = F, error = F, cache = T)
@@ -108,11 +109,15 @@ A função `correlog` aplica o Moran I para dados univariados, é simples e perm
 
 ```{r, fig.cap="**Figura 3**. Os círculos em preto representam as classes de distância significativamente diferentes de zero."}
 library(ncf)
-ncf.cor <- ncf::correlog(x=mite.xy$x, y=mite.xy$y, mite.env$SubsDens, 
+ncf.cor <- ncf::correlog(x=mite.xy$x, y=mite.xy$y, 
+                         z=mite.env$SubsDens, 
                     increment = 0.7, resamp = 1000, quiet = T)
-ncf.cor
-abline(h = 0, lty = 2)
+#plot(ncf.cor)
+#abline(h = 0, lty = 2)
 ```
+
+
+![**Figura 3**. Os círculos em preto representam as classes de distância significativamente diferentes de zero.](ncf_correlog.png)
 
 A documentação da função (`help(correlog)`) não indica se os valores de significância estimados (coluna `p` no objeto) possuem algum tipo de correção para múltiplos testes. Parece que não.
 
@@ -179,7 +184,7 @@ Antes disso, vamos usar a <a href="http://adn.biol.umontreal.ca/~numericalecolog
 
 [^3]: essa função foi modificada por mim para incluir a opção de se plotar ou não o texto referente ao local.
 
-```{r, eval=F}
+```{r, eval=F, show=F, results='hide'}
 source("plot.links.r")
 plot.links(mite.xy, thresh = 0.7, text = F)
 ```
@@ -223,10 +228,10 @@ Para isso fez um for. Mas o resultado gráfico é bem legal.
 corre2 <- as.data.frame(print(corre.sp, p.adj.method = "holm"))
 ```
 
-```{r, echo=F, fig.cap = "**Figura 8**. Plotando os correlogramas das funções utilizadas, exceto para `spline.correlog`."}
+```{r,  fig.cap = "**Figura 8**. Plotando os correlogramas das funções utilizadas, exceto para `spline.correlog`."}
 plot(ncf.cor$mean.of.class, ncf.cor$correlation, xlab = "Distance",
-     ylab = "Moran I")
-lines(ncf.cor$mean.of.class, ncf.cor$correlation)
+     ylab = "Moran I") 
+lines(x=ncf.cor$mean.of.class, y=ncf.cor$correlation)
 points(ncf.cor$mean.of.class[ncf.cor$p < 0.025], ncf.cor$correlation[ncf.cor$p < 
         0.025], pch = 21, bg = "black")
 abline(h = 0, lty = 2)

@@ -1,5 +1,11 @@
 "0","library(knitr)"
-"0","library(ncf); library(pgirmess); library(spdep)"
+"0","#library(ncf); library(spdep)"
+"0","#library(pgirmess); "
 "0","library(vegan)"
-"0",""
+"2","Carregando pacotes exigidos: permute
+"
+"2","Carregando pacotes exigidos: lattice
+"
+"2","This is vegan 2.5-7
+"
 "0","knitr::opts_chunk$set(echo = T, warning = F, fig.align = ""center"", message = F, error = F, cache = T)"

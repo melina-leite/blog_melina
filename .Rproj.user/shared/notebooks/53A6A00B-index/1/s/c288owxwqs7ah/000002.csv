@@ -1,7 +1,0 @@
-"0",""
-"0","# para as cores"
-"0","rbPal <- colorRampPalette(c('red','blue'))"
-"0","mite.env$Col <- rbPal(10)[as.numeric(cut(mite.env$SubsDens,breaks = 10))]"
-"0",""
-"0","plot(x = mite.xy[,1], y = mite.xy[,2], xlab = ""coordenadas X"", "
-"0","     ylab = ""coordeandas Y"", col = mite.env$Col, pch = 16, cex = 2)"
