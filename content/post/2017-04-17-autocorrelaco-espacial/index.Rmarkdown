@@ -107,7 +107,7 @@ O pacote `ncf`(Spatial Nonparametric Covariance Functions), contém diversas fun
 
 A função `correlog` aplica o Moran I para dados univariados, é simples e permite calcular o **nível de significância dos índices por reamostragem** (argumento `resamp`). Nesta função você especifica a coordenada X e Y, o valor da variável de interesse em cada local e o incremento das classes de distância (o intervalo que vai corresponder a cada classe de distância). A reamostragem pode ser demorada dependendo do número de locais na sua amostra.
 
-```{r, fig.cap="**Figura 3**. Os círculos em preto representam as classes de distância significativamente diferentes de zero."}
+```{r}
 library(ncf)
 ncf.cor <- ncf::correlog(x=mite.xy$x, y=mite.xy$y, 
                          z=mite.env$SubsDens, 
