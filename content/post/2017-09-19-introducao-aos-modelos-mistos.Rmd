@@ -20,10 +20,7 @@ library(ggplot2); library(cowplot)
 ```{r, echo=F}
 dados <- read.table("../../data/2017-09-19-introducao-aos-modelos-mistos/RIKZ.txt", header = TRUE, row.names = 1, as.is = TRUE)
 ```
-
 # Introdução
-
-teste
 
 Esse roteiro é fruto de um grupo de discussões sobre modelos mistos da LAGE (IB - USP), escrito por mim, [Marília Gaiarsa](https://mariliagaiarsa.weebly.com/) e [Lucas Medeiros](http://www.guimaraes.bio.br/people.html). O nosso objetivo é apresentar modelos lineares mistos e a sua aplicação usando dados ecológicos e o ambiente de programação **R**[^5].
 
