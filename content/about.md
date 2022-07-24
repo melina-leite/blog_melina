@@ -1,6 +1,6 @@
 ---
 date: "2022-07-24"
-title: Sobre
+title: Sobre mim
 ---
 
 Olá! 

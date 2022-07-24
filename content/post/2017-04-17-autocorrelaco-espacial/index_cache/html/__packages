@@ -1,11 +1,11 @@
 base
 knitr
+permute
+lattice
+vegan
 ncf
 pgirmess
 sp
 spData
 sf
 spdep
-permute
-lattice
-vegan

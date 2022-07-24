@@ -39,10 +39,10 @@ Para esse roteiro, eu utilizei os livros de @borcard_numerical_2011 (capítulo 2
 Vamos utilizar os dados disponibilizados em @borcard_numerical_2011 (baixe a planilha de dados ambientais [nesse link](https://drive.google.com/file/d/1WEubmNAlY73RkX2F0A7U9E36McQWl0Ra/view?usp=sharing) e a de dados das coordenadas geográficas dos pontos [nesse link](https://drive.google.com/file/d/1-ZIHoDYU-YIZ5fol_OxUOhGHZDGk-Kfh/view?usp=sharing)),  com dados ambientais coletados em diferentes pontos de um rio.
 
 ```{r, echo=F}
-env <- read.table("content/post/2018-01-21-explora-multivariada/DoubsEnv.csv", header=T, sep=",")
-spa <- read.table("content/post/2018-01-21-explora-multivariada/DoubsSpa.csv", header=T, sep=",", 
+env <- read.table("DoubsEnv.csv", header=T, sep=",")
+spa <- read.table("DoubsSpa.csv", header=T, sep=",", 
                   row.names = 1)
-source("content/post/2018-01-21-explora-multivariada/panelutils.R")
+source("panelutils.R")
 ```
 ```{r, eval=F}
 env <- read.table("DoubsEnv.csv", header=T, sep=",")

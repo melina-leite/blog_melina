@@ -2,7 +2,7 @@
 title: Explorando dados ambientais em análises multivariadas
 author: Melina de Souza Leite
 date: '2018-01-21'
-bibliography: "../../data/2018-01-21-explorando-dados-ambientais-em-análises-multivariadas/refs.bib"
+bibliography: "refs.bib"
 slug: explorando-dados-ambientais-em-análises-multivariadas
 categories:
   - R
@@ -15,13 +15,14 @@ output:
     toc: false
 ---
 
+<script src="2018-01-21-explorando-dados-ambientais-em-análises-multivariadas_files/header-attrs/header-attrs.js"></script>
 
 
 <p>Neste roteiro, pretendo apresentar e explorar algumas ferramentas de visualização e exploração de dados multivariados, em especial variáveis ambientais coletadas em diferentes locais. Estes são dados muito utilizados em Ecologia, e portanto merecem nossa atenção, mas isso não quer dizer que as técnicas aqui apresentadas não sejam úteis a outros tipos de dados multivariados, muito pelo contrário!</p>
-<p>Para esse roteiro, eu utilizei os livros de <span class="citation">Borcard, Gillet, and Legendre (2011)</span> (capítulo 2), <span class="citation">Manly and Navarro Alberto (2017)</span> (Capítulo 3), <span class="citation">Everitt and Hothorn (2011)</span> (Capítulo 2). Vale a pena a leitura destes capítulos para aprofundamento!</p>
-<div id="explorando-variaveis-ambientais-ao-longo-de-um-rio" class="section level1">
+<p>Para esse roteiro, eu utilizei os livros de <span class="citation"><a href="#ref-borcard_numerical_2011" role="doc-biblioref">Borcard, Gillet, and Legendre</a> (<a href="#ref-borcard_numerical_2011" role="doc-biblioref">2011</a>)</span> (capítulo 2), <span class="citation"><a href="#ref-manly_multivariate_2017" role="doc-biblioref">Manly and Navarro Alberto</a> (<a href="#ref-manly_multivariate_2017" role="doc-biblioref">2017</a>)</span> (Capítulo 3), <span class="citation"><a href="#ref-everitt_introduction_2011" role="doc-biblioref">Everitt and Hothorn</a> (<a href="#ref-everitt_introduction_2011" role="doc-biblioref">2011</a>)</span> (Capítulo 2). Vale a pena a leitura destes capítulos para aprofundamento!</p>
+<div id="explorando-variáveis-ambientais-ao-longo-de-um-rio" class="section level1">
 <h1>Explorando variáveis ambientais ao longo de um rio</h1>
-<p>Vamos utilizar os dados disponibilizados em <span class="citation">Borcard, Gillet, and Legendre (2011)</span> (baixe a planilha de dados ambientais <a href="https://drive.google.com/file/d/1WEubmNAlY73RkX2F0A7U9E36McQWl0Ra/view?usp=sharing">nesse link</a> e a de dados das coordenadas geográficas dos pontos <a href="https://drive.google.com/file/d/1-ZIHoDYU-YIZ5fol_OxUOhGHZDGk-Kfh/view?usp=sharing">nesse link</a>), com dados ambientais coletados em diferentes pontos de um rio.</p>
+<p>Vamos utilizar os dados disponibilizados em <span class="citation"><a href="#ref-borcard_numerical_2011" role="doc-biblioref">Borcard, Gillet, and Legendre</a> (<a href="#ref-borcard_numerical_2011" role="doc-biblioref">2011</a>)</span> (baixe a planilha de dados ambientais <a href="https://drive.google.com/file/d/1WEubmNAlY73RkX2F0A7U9E36McQWl0Ra/view?usp=sharing">nesse link</a> e a de dados das coordenadas geográficas dos pontos <a href="https://drive.google.com/file/d/1-ZIHoDYU-YIZ5fol_OxUOhGHZDGk-Kfh/view?usp=sharing">nesse link</a>), com dados ambientais coletados em diferentes pontos de um rio.</p>
 <pre class="r"><code>env &lt;- read.table(&quot;DoubsEnv.csv&quot;, header=T, sep=&quot;,&quot;)
 spa &lt;- read.table(&quot;DoubsSpa.csv&quot;, header=T, sep=&quot;,&quot;, row.names = 1)</code></pre>
 <table>
@@ -149,10 +150,10 @@ spa &lt;- read.table(&quot;DoubsSpa.csv&quot;, header=T, sep=&quot;,&quot;, row.
 skim(env)
 # e 
 summary(env)</code></pre>
-<div id="mapas-das-variaveis-ambientais" class="section level2">
+<div id="mapas-das-variáveis-ambientais" class="section level2">
 <h2>Mapas das variáveis ambientais</h2>
 <p>Se você tem as coordenadas geográficas das variáveis, pode ser muito útil plotar as variáveis ambientais no mapa.</p>
-<p>No nosso exemplo, utilizei o script disponível em <span class="citation">Borcard, Gillet, and Legendre (2011)</span> para plotar algumas variáveis ao longo do rio<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. Neste mapa estamos utilizando uma técnica chamada “bubble maps”, no qual o tamanho dos círculos é proporcional ao valor da variável analisada.</p>
+<p>No nosso exemplo, utilizei o script disponível em <span class="citation"><a href="#ref-borcard_numerical_2011" role="doc-biblioref">Borcard, Gillet, and Legendre</a> (<a href="#ref-borcard_numerical_2011" role="doc-biblioref">2011</a>)</span> para plotar algumas variáveis ao longo do rio<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Neste mapa estamos utilizando uma técnica chamada “bubble maps,” no qual o tamanho dos círculos é proporcional ao valor da variável analisada.</p>
 <pre class="r"><code>par(mfrow=c(2,2))
 plot(spa, asp=1, main=&quot;Altitude&quot;, pch=21, col=&quot;white&quot;, bg=&quot;red&quot;,
     cex=5*env$alt/max(env$alt), xlab=&quot;coord x&quot;, ylab=&quot;coord y&quot;)
@@ -166,7 +167,7 @@ lines(spa, col=&quot;light blue&quot;)
 plot(spa, asp=1, main=&quot;Nitrate&quot;, pch=21, col=&quot;white&quot;, bg=&quot;brown&quot;,
     cex=5*env$nit/max(env$nit), xlab=&quot;coord x&quot;, ylab=&quot;coord y&quot;)
 lines(spa, col=&quot;light blue&quot;)</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Abaixo vai o código para os mesmos plots usando o pacote <code>ggplot2</code> para quem preferir:</p>
 <pre class="r"><code>library(ggplot2)
 library(cowplot) # melhoras no acabamento do gráfico
@@ -200,30 +201,30 @@ plot(env$das, env$oxy, type=&quot;l&quot;, xlab=&quot;Distância (km)&quot;,
     ylab=&quot;Oxygen (mg/L)&quot;, col=&quot;green3&quot;, main=&quot;Oxygen&quot;)
 plot(env$das, env$nit, type=&quot;l&quot;, xlab=&quot;Distância (km)&quot;, 
     ylab=&quot;Nitrate (mg/L)&quot;, col=&quot;brown&quot;, main=&quot;Nitrate&quot;)</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="correlacoes-entre-as-variaveis" class="section level2">
+<div id="correlações-entre-as-variáveis" class="section level2">
 <h2>Correlações entre as variáveis</h2>
-<p>Para explorar graficamente a relação bivariada entre as variáveis ambientais<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>, podemos usar a função <code>pairs()</code>, que vai desenhar todas as combinações de variáveis duas a duas.</p>
+<p>Para explorar graficamente a relação bivariada entre as variáveis ambientais<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, podemos usar a função <code>pairs()</code>, que vai desenhar todas as combinações de variáveis duas a duas.</p>
 <pre class="r"><code>pairs(env[,3:7],
     main=&quot;Relações entre variáveis&quot;)</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Entretanto, esta função pode ser melhorada para nos dar mais informação em um só gráfico. Para fazer o plot abaixo, baixe <a href="https://drive.google.com/file/d/1-pvdeA58M0KDPjZzHkMLYCGPlfJLx3aX/view?usp=sharing">esse código</a>(disponibilizado por Borcard et al. 2011, de Francois Gillet) e rode a função <code>panelutils</code> ou use a função <code>source</code> para carrega-la no seu workspace.</p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Entretanto, esta função pode ser melhorada para nos dar mais informação em um só gráfico. Para fazer o plot abaixo, baixe <a href="https://drive.google.com/file/d/1-pvdeA58M0KDPjZzHkMLYCGPlfJLx3aX/view?usp=sharing">esse código</a>(disponibilizado por Borcard et al. 2011, de Francois Gillet) e rode a função <code>panelutils</code> ou use a função <code>source</code> para carrega-la no seu workspace.</p>
 <pre class="r"><code>source(&quot;panelutils.R&quot;)</code></pre>
 <pre class="r"><code>pairs(env[,3:7], diag.panel = panel.hist, upper.panel = panel.cor,
       lower.panel = panel.smooth,   main=&quot;Relações entre variáveis&quot;)</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Esse gráfico nos dá os histogramas de cada variável na diagonal, os gráficos de dispersão nos painéis debaixo e os valores das correlações com seu níveis de significância (astericos abaixo do valor da correlação). O histogramas são úteis para se avaliar a distribuição dos dados, e os gráficos de dispersão para ver a forma das relações entre as variáveis (relações lineares, monotônicas, etc.)</p>
 <p>Existe também o pacote <code>corrplot</code> que faz gráficos de painéis bem legais. Vale a pena olhar a vinheta do pacote (está no help)! Abaixo vai um exemplo, no qual ordenamos as variáveis fazendo um agrupamento hierárquico (você escolhe o número de grupos e também o métodos de agrupamento) para ver quais variáveis são mais relacionadas entre si.</p>
 <pre class="r"><code>library(corrplot)
 
 M &lt;- cor(env[,2:11]) # primeiro é preciso fazer as correlações
 corrplot(M, method=&quot;circle&quot;, insig = &quot;p-value&quot;, order=&quot;hclust&quot;, addrect=4)</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>A principal desvantage do painel de plots bivariados é que aspectos dos dados que aparecem apenas quando 3 ou mais variáveis são consideradas em conjunto não ficam aparentes.</p>
 <p>Estes gráficos também só são adequados para comparar as variáveis e não os locais (objetos ou unidades amostrais, as linhas da matriz).</p>
 </div>
-<div id="visualizando-a-comparacao-entre-locais" class="section level2">
+<div id="visualizando-a-comparação-entre-locais" class="section level2">
 <h2>Visualizando a comparação entre locais</h2>
 <div id="as-faces-de-chernoff" class="section level3">
 <h3>As faces de Chernoff</h3>
@@ -264,7 +265,7 @@ corrplot(M, method=&quot;circle&quot;, insig = &quot;p-value&quot;, order=&quot;
 <pre class="r"><code>library(TeachingDemos)
 canmat &lt;- data.matrix(env[,2:7])
 faces2(canmat, labels = row.names(env), which= c(3,5,6,8,11,13))</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>#outro pacote e função para desenhar as faces:
 library(aplpack)
 fa &lt;- faces(env[,2:7],plot=FALSE)
@@ -276,11 +277,11 @@ plot(fa,face.type=2)</code></pre>
 <p>As estrelas são uma forma similiar de observar a relação entre os locais de amostragm baseando-se nas variáveis ambientais. A função <code>stars</code> está no pacote base do R.</p>
 <pre class="r"><code>stars(env[,3:8], labels = row.names(env), draw.segments = TRUE, nrow=5, ncol=7,
       key.loc = c(10,2))</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Eu particularmente gosto muito desta visualização, pois nos permite observar as variáveis mais importantes (com os maiores valores) em cada local e os locais mais parecidos ao mesmo tempo. Por exemplo, o ponto 1 está em alta altitude e declividade (<code>pen</code>), e seguindo o curso do rio (indo em direção ao local 30), temos que a descarga (<code>deb</code>) aumenta junto com a concentração de cálcio (<code>dur</code>).</p>
 <p>Estes plots são outra forma de observar o gradiente ambiental das variáveis, como feito nos mapas inicialmente.</p>
 </div>
-<div id="perfil-das-variaveis" class="section level3">
+<div id="perfil-das-variáveis" class="section level3">
 <h3>Perfil das Variáveis</h3>
 <p>Essa é uma forma de representar os locais (objetos) todos de uma vez, e é especialmente útil quando temos variáveis em uma mesma unidade, por exemplo dados de diferentes medidas morfológicas de animais, o que não é o caso dos nossos dados. Porque os dados ambientais são dimensionalmente heterogêneos (diferentes unidades e escalas), precisamos que eles sejam <strong>padronizados para z-score</strong> (média zero e unidade de variância - centraliza e escalona). Assim, removemos a dimensionalidade dos dados, permitindo as comparações.</p>
 <pre class="r"><code>env.p &lt;- scale(env[,2:12], center = T, scale = T)
@@ -293,13 +294,14 @@ env.p %&gt;%
 ggplot(aes(x=variaveis, y=valores, group=env.X, col=env.X)) + #plot com ggplot2
   geom_line() +
   scale_color_continuous(&quot;locais&quot;, breaks = c(1,10,20,28), labels=c(1,10,20,30))</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Além de compararmos os locais em relação às variáveis ambientais, também conseguimos ver a variablidade dos dados. Por exemplo, vemos que a variável <code>pen</code> tem pouca variabilidade, mas possui um valor extremo. O pH em comparação às outras variáveis também tem pouca variabilidade. Certas análises multivariadas tem como premissa a variância homogênea entre variáveis, e esse plot de perfil pode ajudar a diagnosticar isso.</p>
 </div>
 </div>
-<div id="boxplots-bivariado-para-comparar-variaveis" class="section level2">
+<div id="boxplots-bivariado-para-comparar-variáveis" class="section level2">
 <h2>Boxplots bivariado para comparar variáveis</h2>
-<p>Everitt &amp; Hothorn 2011 apresentam uma maneira bem interessante de observar as relações entre 2 variáveis, o <strong>boxplot bivariado</strong>. Estes boxplots são também extremamente úteis na identificação de valores extremos (<em>outliers</em>).</p>
+<p>Everitt &amp; Hothorn 2011 apresentam uma maneira bem interessante de observar as relações entre 2 variáveis, o <strong>boxplot bivariado</strong>.
+Estes boxplots são também extremamente úteis na identificação de valores extremos (<em>outliers</em>).</p>
 <p>Os boxplots bivariados são baseados nos cálculos “robustos” das medidas de locação, escala e correlação e consiste em um par de elipses concêntricas, uma das quais inclui 50% dos dados e a outra que delinea o limite dos dados e deixa de fora possíveis <em>outliers</em>. Também são desenhadas linhas de regressão de x em y e de y em x, com sua interseção mostrando o parâmetro de locação (média das duas variáveis). O ângulo entre as linhas de regressão serão tão pequenos quanto maior for a correlação entre as variáveis.</p>
 <p>Vamos usar a função <code>bvbox</code> do pacote <code>MVA</code> que acompanha o livro de Everitt &amp; Hothorn 2011, para observar as relações entre altitute e as outras variáveis:</p>
 <pre class="r"><code>library(MVA)
@@ -323,28 +325,28 @@ text(env[,3], env[,11], env$X)
 bvbox(env[,c(3,12)], xlab = colnames(env)[3], ylab = colnames(env)[12], pch=&quot;&quot;)
 text(env[,3], env[,12], env$X)
 par(mfrow=c(1,1))</code></pre>
-<p><img src="/post/2018-01-21-explorando-dados-ambientais-em-an%C3%A1lises-multivariadas_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-01-21-explora-multivariada/2018-01-21-explorando-dados-ambientais-em-ana%CC%81lises-multivariadas_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Nestes plots, já podemos observar que existem pares de variáveis com <em>outliers bivariados</em> em alguns locais (identificados com os números nos plots). Podemos ver que, quando as variáveis não são correlacionadas, o formato do boxplot bivariado é praticamente um círculo, como acontece entre altitude e pH.</p>
 </div>
 </div>
-<div id="referencias-consultadas" class="section level1 unnumbered">
+<div id="referências-consultadas" class="section level1 unnumbered">
 <h1>Referências consultadas</h1>
-<div id="refs" class="references">
-<div id="ref-borcard_numerical_2011">
-<p>Borcard, D, F Gillet, and P Legendre. 2011. <em>Numerical Ecology with R</em>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-borcard_numerical_2011" class="csl-entry">
+Borcard, D, F Gillet, and P Legendre. 2011. <em>Numerical Ecology with <span>R</span></em>.
 </div>
-<div id="ref-everitt_introduction_2011">
-<p>Everitt, B, and T Hothorn. 2011. <em>An Introduction to Applied Multivariate Analysis with R</em>.</p>
+<div id="ref-everitt_introduction_2011" class="csl-entry">
+Everitt, B, and T Hothorn. 2011. <em>An Introduction to Applied Multivariate Analysis with <span>R</span></em>.
 </div>
-<div id="ref-manly_multivariate_2017">
-<p>Manly, Bryan F. J., and Jorge A. Navarro Alberto. 2017. <em>Multivariate Statistical Methods: A Primer</em>. Fourth edition. Boca Raton: CRC Press.</p>
+<div id="ref-manly_multivariate_2017" class="csl-entry">
+Manly, Bryan F. J., and Jorge A. Navarro Alberto. 2017. <em>Multivariate Statistical Methods: A Primer</em>. Fourth edition. Boca Raton: CRC Press.
 </div>
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>Mantive os nomes das variáveis em inglês para não fazer traduções erradas, pois isso não importa pra gente neste momento.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Para facilitar a visualização, à vezes uso apenas um subconjunto de variáveis.<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>Mantive os nomes das variáveis em inglês para não fazer traduções erradas, pois isso não importa pra gente neste momento.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Para facilitar a visualização, à vezes uso apenas um subconjunto de variáveis.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
