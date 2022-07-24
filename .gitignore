@@ -4,3 +4,6 @@
 .Rhistory
 .RData
 .Rproj.user
+
+Thumbs.db
+.hugo_build.lock

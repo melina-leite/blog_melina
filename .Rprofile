@@ -3,4 +3,5 @@ if (file.exists("~/.Rprofile")) {
 }
 
 options(blogdown.author = "Melina de Souza Leite",
-        blogdown.ext = ".rmd")
+        blogdown.ext = ".rmd",
+        blogdown.hugo.version = "0.101.0")
