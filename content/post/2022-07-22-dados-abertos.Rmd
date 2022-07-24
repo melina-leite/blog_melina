@@ -15,9 +15,10 @@ tags:
 knitr::opts_chunk$set(echo = T, warning = F, fig.align = "center", message = F, error = F, cache = TRUE)
 library(knitr)
 #![](post/2022-07-22-dados-abertos_files/figure-html/cartaz.jpg)
+#![](../../data/2022-07-22-dados-abertos/cartaz.jpg)
 ```
 
-![](../../data/2022-07-22-dados-abertos/cartaz.jpg)
+![](post/2022-07-22-dados-abertos_files/figure-html/cartaz.jpg)
 
 Dados são centrais na pesquisa ecológica, ainda assim, o treinamento de nós - cientistas em formação - em organização, gestão e publicação de dados é pouco valorizado. O resultado é frustração, tempo perdido, gambiarras e altas chances de perda de parte (senão todo) dos dados! Além disso, dados abertos têm se tornado um tema muito debatido com o movimento crescente da “Ciência Aberta”. Agências de fomento e revistas científicas têm exigido planos de gestão e declarações sobre disponibilidade dos dados.  
 
