@@ -1,4 +1,6 @@
+
 .Rproj.user
+
 .Rhistory
 .RData
 .Ruserdata
@@ -11,3 +13,4 @@ Thumbs.db
 
 public/* 
 resources/*
+.Rproj.user/*
