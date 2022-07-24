@@ -1,0 +1,5 @@
+"0","library(knitr)"
+"0","library(ncf); library(pgirmess); library(spdep)"
+"0","library(vegan)"
+"0",""
+"0","knitr::opts_chunk$set(echo = T, warning = F, fig.align = ""center"", message = F, error = F, cache = T)"

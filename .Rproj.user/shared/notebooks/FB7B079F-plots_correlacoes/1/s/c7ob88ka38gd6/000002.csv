@@ -1,0 +1,4 @@
+"0","library(corrplot)"
+"0","# primeiro fazemos a matriz de correlação"
+"0","M <- cor(swiss)"
+"0","corrplot(M, method = ""circle"")"

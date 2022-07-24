@@ -1,0 +1,8 @@
+"0","panel.lm <- function (x, y, col = par(""col""), bg = NA, pch = par(""pch""), "
+"0","    cex = 1, col.line=""red"") {"
+"0","    points(x, y, pch = pch, col = col, bg = bg, cex = cex)"
+"0","    ok <- is.finite(x) & is.finite(y)"
+"0","    if (any(ok)) {"
+"0","       abline(lm(y[ok]~x[ok]), col = col.line)"
+"0","    }"
+"0","}"

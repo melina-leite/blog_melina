@@ -1,0 +1,3 @@
+"0","library(vegan)"
+"0","data(mite.xy) # coordenadas espaciais"
+"0","data(mite.env) # variáveis ambientais"

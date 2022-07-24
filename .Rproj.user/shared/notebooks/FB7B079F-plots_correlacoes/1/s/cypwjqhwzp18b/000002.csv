@@ -1,0 +1,3 @@
+"0","car::spm(~ Sepal.Length + Sepal.Width +  Petal.Length|Species, "
+"0","         data = iris,"
+"0","        by.group=TRUE)"
