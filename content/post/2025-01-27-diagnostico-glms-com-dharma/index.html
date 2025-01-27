@@ -1,0 +1,362 @@
+---
+title: Diagnóstico de GLMs com o pacote DHARMa
+author: Melina de Souza Leite
+date: '2025-01-27'
+slug: diagnostico-glms-com-dharma
+categories: [statistics]
+tags: ["pacotes em R", "GLMs", "resíduos"]
+---
+
+
+
+<p>Roteiro preparado para aula sobre diagnóstico de modelos da disciplina <a href="http://insilvaarbores.com.br/BIE5781/doku.php?id=historico:2024:programacao">BIE5781 Modelagem Estatística para Ecologia e Recursos Naturais</a> do Programa de Pós-Graduação em Ecologia da Universidade de São Paulo.</p>
+<p>Comentários e questões, por favor fale com <a href="https://melinaleite.weebly.com/contact.html">Melina</a>.</p>
+<p>Para mais detalhes, veja a <a href="https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html">vinheta do pacote</a>.</p>
+<p><strong>OBS</strong>: Este roteiro também está disponivel no site do <a href="https://rpubs.com/melinatarituba/1248761">Rpubs</a>.</p>
+<p>Primeiro, carregando os pacotes que serão usados:</p>
+<pre class="r"><code>library(DHARMa)
+library(lme4)
+library(glmmTMB)
+library(ggplot2)</code></pre>
+<div id="visão-geral-das-funções-do-dharma" class="section level1">
+<h1>Visão geral das funções do DHARMa</h1>
+<p>Vamos primeiro gerar 200 observações de uma distribuição Poisson com uma variável ambiental com a função <code>createData</code> do próprio pacote <code>DHARMa</code>:</p>
+<pre class="r"><code>set.seed(1234) # para garantir que todos tenhamos os mesmos resultados
+testData = createData(sampleSize = 200, intercept = 0, fixedEffects = 1,
+                      numGroups = 10, randomEffectVariance = 1,
+                      family = poisson())</code></pre>
+<p>Olhando a cara dos dados:</p>
+<pre class="r"><code>head(testData) </code></pre>
+<pre><code>##   ID observedResponse Environment1 group time         x         y
+## 1  1                0   0.68330509     1   28 0.5063586 0.9770535
+## 2  2                0  -0.16955524     1   80 0.8212286 0.5117742
+## 3  3                1   0.78339199     1  150 0.5447566 0.4671612
+## 4  4                2  -0.58651859     1  101 0.2666845 0.7238355
+## 5  5                2   0.90039742     1  111 0.3446373 0.1420736
+## 6  6                0  -0.04308309     1  137 0.3691760 0.5235778</code></pre>
+<ul>
+<li><code>observedResponse</code> é a variável resposta, vindo de uma Poisson variando entre 0 e 13.<br />
+</li>
+<li><code>Environment1</code> é a variável preditora ambiental.<br />
+</li>
+<li><code>group</code> é a variável de agrupamento, digamos locais amostrados, regiões, blocos de experimentos, etc.<br />
+</li>
+<li><code>time</code> seria uma variável que indica tempo, mas não estamos usando neste exemplo. Logo esse tempo é aleatóriamente definido nos dados (valores de 1 a 200).<br />
+</li>
+<li><code>x</code> e <code>y</code> seriam as coordenadas espaciais das observações, mas também não estamos usando nesse exemplo. Logo os valores são tirados de uma distribuição uniforme entre 0 e 1).</li>
+</ul>
+<pre class="r"><code>ggplot(testData, aes(y = observedResponse, x = Environment1, col = group))+
+  geom_point() +
+  theme_classic()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Agora vamos ajustar o modelo <strong>correto</strong> para este dados, usando um GLMM Poisson da variável resposta em função da variável preditora ambiental e o intercepto aleatório de grupo, com o pacote <code>lme4</code>:</p>
+<pre class="r"><code>fittedModel &lt;- glmer(observedResponse ~ Environment1 + (1|group),
+                     family = &quot;poisson&quot;,
+                     data = testData)</code></pre>
+<div id="calculando-os-resíduos-padronizados" class="section level2">
+<h2>Calculando os resíduos padronizados</h2>
+<p>Usamos a função <code>simulateResiduals</code>, que por padrão vai gerar 250 simulações<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, para calcular os resíduos quantílicos para cada observação:</p>
+<pre class="r"><code>res &lt;- simulateResiduals(fittedModel)</code></pre>
+</div>
+<div id="os-principais-gráficos-de-resíduos-do-dharma" class="section level2">
+<h2>Os principais gráficos de resíduos do DHARMa</h2>
+<pre class="r"><code>plot(res)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Interpretação do <strong>painel esquerdo</strong>:</p>
+<ul>
+<li><strong>Gráfico quantil-quantil</strong> dos resíduos (Observed) e de uma distribuição uniforme (Expected).</li>
+<li>Teste de <strong>uniformidade</strong> KS (Kolmogorov-Smirnov). Essencialmente, a mesma informação que o QQ, mas em forma de teste e com p-valor para os que gostam.<br />
+</li>
+<li>Teste de <strong>dispersão</strong> (padrão): compara a variância das observações com a variância das simulações.<br />
+</li>
+<li>Testes de <strong>valores extremos/outliers</strong>: testa se o número de outliers (ou seja, observações fora do envelope da simulação) é maior/menor do que seria esperado sob H0 (modelo corretamente especificado).</li>
+</ul>
+<p>Interpretação do <strong>painel direito</strong>:</p>
+<ul>
+<li>DHARMa <strong>resíduos ~ preditos</strong>. Esperamos uma distribuição completamente uniforme na direção <em>y</em>. Para isso, são feitas linhas de tendência com GAMs (generalized additive models) dos quantis ajustados nos resíduos em 0,25, 0,5, 0,75. Se for detectada alguma tendência, as linhas serão destacados em vermelho.</li>
+</ul>
+<p>Esses gráfico também podem ser criados separadamente com as seguintes funções :</p>
+<pre class="r"><code># testes podem ser omitidos, se preferir
+plotQQunif(res,testUniformity = F,testOutliers = F,testDispersion = F) </code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code># predições são geralmente tranformadas em ranking para facilitar observação,
+# principalmente para distribuições cujas predições são distorcidas (skewed)
+# mas podemos desligar se quisermos:
+plotResiduals(res, rank=F)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="testes-disponíveis" class="section level2">
+<h2>Testes disponíveis</h2>
+<p>Os testes acima também pode ser realizados separadamente e com mais profundidade (e gráficos adicionais) a partir das funções de cada teste.
+Lembrando que, segundo nossa hipótese H0 de que o modelo está corretamente especificado, esperamos que os valores de <em>p</em> <strong>não sejam significativos</strong>.</p>
+<div id="uniformidade" class="section level3">
+<h3>Uniformidade</h3>
+<p>Avaliando se os resíduos se conformam como uma distribuição normal. Teste de Kolmogorov-Smirnov (KS).</p>
+<pre class="r"><code>testUniformity(res, plot=F) # o plot é o meso do plotQQunif, vc pode desligá-lo</code></pre>
+<pre><code>## 
+## 	Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  simulationOutput$scaledResiduals
+## D = 0.042355, p-value = 0.8656
+## alternative hypothesis: two-sided</code></pre>
+</div>
+<div id="sobre-ou-subdispersão" class="section level3">
+<h3>Sobre ou subdispersão</h3>
+<p>Sobre/subdispersão significa que os dados observados são mais/menos dispersos do que o esperado de acordo com o modelo ajustado.
+Nesse teste, avaliando se a variância dos resíduos é consistente com a variância esperada. Essa função oferece diferentes testes a partir dos argumentos escolhidos, veja o help <code>?testDispersion</code> para mais detalhes. O histograma apresentado pelo teste é o da distribuição das variâncias dos resíduos simulados e a variância dos resíduos observados (linha horizontal vermelha).
+A estatística D é a razão entre o observado e esperado, com valores acima de 1 indicando sobredispersão e abaixo de 1 indicando subdispersão.</p>
+<pre class="r"><code>testDispersion(res)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa nonparametric dispersion test via sd of residuals fitted vs.
+## 	simulated
+## 
+## data:  simulationOutput
+## dispersion = 0.70258, p-value = 0.656
+## alternative hypothesis: two.sided</code></pre>
+</div>
+<div id="valores-extremos-outliers" class="section level3">
+<h3>Valores extremos / outliers</h3>
+<p>Testa se o número de outliers (observações fora do envelope de simulação) é maior/menor do que seria esperado sob H0 (modelo corretamente especificado).
+Importante ressaltar que <strong>a interpretação destes outliers não é a mesma para outliers em modelos lineares gaussianos.</strong>
+Aqui estamos comparando se o valor observado é maior ou menor do que todos os valores simulados para aquela observação. Pode acontecer que todos os valores simulados para aquela observação são maiores do que o valor observado, recebendo então o resíduo desta observação o valor 0. Se todos os valores simulados são menores do que o valor observado, o resíduo desta observação recebe o valor 1. Logo, o teste depende do número de simulações que você estipulou na função <code>simulateResiduals()</code>; quanto mais simulações, menor a chance de outliers.</p>
+<p>O gráfico mostra a distribuição dos resíduos e se houver outliers, eles serão destacados nos cantos 0 e 1 do eixo x.</p>
+<pre class="r"><code>testOutliers(res)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa bootstrapped outlier test
+## 
+## data:  res
+## outliers at both margin(s) = 0, observations = 200, p-value = 1
+## alternative hypothesis: two.sided
+##  percent confidence interval:
+##  0.000000 0.037625
+## sample estimates:
+## outlier frequency (expected: 0.00515 ) 
+##                                      0</code></pre>
+</div>
+<div id="teste-quantis-resíduo-predito" class="section level3">
+<h3>Teste quantis Resíduo ~ predito</h3>
+<p>Testa se existe alguma relação não esperada entre os resíduos e as predições. Para avaliar essa ausência de relação, são ajustadas 3 GAMs (generalized additive models) nos quantis 0,25, 0,5, 0,75. Se esses GAMs se desviarem significativamente de uma linha reta nesses valores, eles serão destacados (em vermelho). O valor de <em>p</em> do teste abaixo, sem o plot, é uma combinação dos 3 valores de <em>p</em> com correção para múltiplos testes.</p>
+<pre class="r"><code>testQuantiles(res, plot=F)</code></pre>
+<pre><code>## 
+## 	Test for location of quantiles via qgam
+## 
+## data:  res
+## p-value = 0.4347
+## alternative hypothesis: both</code></pre>
+</div>
+<div id="dados-zero-inflado" class="section level3">
+<h3>Dados zero-inflado</h3>
+<p>Verificar se há mais zeros nos dados do que o esperado pela distribuição. O histograma mostra a quantidade de zeros vindo das simulações e a quantidade de zeros observada (linha vermelha vertical). O teste de zero-inflação é um teste de diferença entre a quantidade de zeros observada e a quantidade de zeros esperada.</p>
+<pre class="r"><code>testZeroInflation(res)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa zero-inflation test via comparison to expected zeros with
+## 	simulation under H0 = fitted model
+## 
+## data:  simulationOutput
+## ratioObsSim = 1.0491, p-value = 0.808
+## alternative hypothesis: two.sided</code></pre>
+</div>
+<div id="autocorrelação-espacial" class="section level3">
+<h3>Autocorrelação espacial</h3>
+<p>Detecta se há indícios de autocorrelação espacial nos resíduos. Para isso, precisa prover os valores das coordenadas dos dados. Aqui estamos usando as variáveis <code>x</code> e <code>y</code> do nosso conjunto de dados, mas elas são aleatoriamente geradas e não representam uma estrutura espacial real.</p>
+<pre class="r"><code>testSpatialAutocorrelation(res, x = testData$x, y = testData$y )</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa Moran&#39;s I test for distance-based autocorrelation
+## 
+## data:  res
+## observed = -0.0071370, expected = -0.0050251, sd = 0.0099197, p-value =
+## 0.8314
+## alternative hypothesis: Distance-based autocorrelation</code></pre>
+</div>
+<div id="teste-de-autocorrelação-temporal" class="section level3">
+<h3>Teste de autocorrelação temporal</h3>
+<p>O mesmo para autocorrelação temporal, mas aqui precisamos de uma variável temporal (sequencia de acontecimentos). Vamos usar a variável <code>time</code> do nosso conjunto de dados, mas ela é aleatoriamente gerada e não representa uma estrutura temporal real.</p>
+<pre class="r"><code>testTemporalAutocorrelation(res, time = testData$time)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre><code>## 
+## 	Durbin-Watson test
+## 
+## data:  simulationOutput$scaledResiduals ~ 1
+## DW = 2.0251, p-value = 0.8587
+## alternative hypothesis: true autocorrelation is not 0</code></pre>
+</div>
+</div>
+<div id="teste-de-autocorrelação-filogenética" class="section level2">
+<h2>Teste de autocorrelação filogenética</h2>
+<p>Caso você tenha dados filogeneticamente estruturado, você pode prover uma matriz de distâncias filogenéticas para testar se há autocorrelação filogenética nos resíduos.
+Veja exemplos no help da função.
+Abaixo, apenas mostro um exemplo, mas nao funciona porque não tempos uma matriz filogenética</p>
+<pre class="r"><code>testPhylogeneticAutocorrelation(res, phylo = phylo) # nao funciona aqui, pois não temos uma matriz filogenética.</code></pre>
+</div>
+<div id="algumas-outras-funções" class="section level2">
+<h2>Algumas outras funções</h2>
+<p>Fazer o histograma dos resíduos <code>hist()</code>; ver os resíduos <code>residuals()</code>; e plotar os resíduos contra uma variável preditora <code>plotResiduals()</code>*.</p>
+<p>*Essa última função <code>plotResiduals()</code> é a mesma que apresentamos acima, mas agora motramos a opção de plotar os resíduos contra uma variável preditora. O que pode ser muit útil para verificar heterocedasticidade, por exemplo.</p>
+<pre class="r"><code>residuals(res)
+(res)</code></pre>
+<pre class="r"><code>plotResiduals(res, form = testData$Environment1)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+</div>
+<div id="alguns-exemplos-e-possíveis-problemas" class="section level1">
+<h1>Alguns exemplos e possíveis problemas</h1>
+<div id="remover-o-efeito-aleatório-vai-criar-sobredispersão" class="section level2">
+<h2>Remover o efeito aleatório vai criar sobredispersão</h2>
+<p>Lembre-se que o nosso conjunto de dados tem uma estrutura agrupada (variável <code>grupo</code>). Se ignormarmos essa estrutura ajustando um GLM, podemos ver as consequências de um modelo incorretamente especificado através dos resíduos:</p>
+<pre class="r"><code>fittedModel2 &lt;- glm(observedResponse ~ Environment1 , 
+                     family = &quot;poisson&quot;, data = testData)
+
+res2 &lt;- simulateResiduals(fittedModel = fittedModel2)
+plot(res2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Veja como os resíduos agora não estão mais uniformemente distribuídos e os testes principais estão todos significativos. A forma meio S dos pontos observados no qqplot também indicam possível sobredispersão nos dados. Vamos ver o valor da dispersão:</p>
+<pre class="r"><code>testDispersion(res2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa nonparametric dispersion test via sd of residuals fitted vs.
+## 	simulated
+## 
+## data:  simulationOutput
+## dispersion = 3.2236, p-value &lt; 2.2e-16
+## alternative hypothesis: two.sided</code></pre>
+<p>Um coeficiente de dispersão de 3 indica que a variância dos resíduos é 3 vezes maior do que a variância esperada pela distribuição Poisson. Isso é um sinal claro de sobredispersão. Veja o gráfico o quão longe está o valor de sobredispersão dos dados observados contra o histograma dos simulados.</p>
+<p><strong>OBS</strong>: Geralmente, em modelos Poisson, qualquer especificação equivocada do modelo vai indicar sobredispersão. Mas cuidado! Para resolver isso, não basta mudar para outra distribuição, por exemplo Binomial Negativa. Muitas vezes é mais adequando investigar melhor as possíveis causas, por exemplo preditores faltantes (incluindo ausência de efeito quadrático ou outra relação não-linear do preditor com a variável resposta), estrutura de agrupamento não considerada (exemplo acima), dados com inflação de zeros, etc.</p>
+</div>
+<div id="variável-preditora-faltante" class="section level2">
+<h2>Variável preditora faltante</h2>
+<p>Às vezes, a falta de um preditor importante pode não parecer problemático no diagnóstico geral. Aqui vamos ajustar um modelo sem a variável ambiental:</p>
+<pre class="r"><code>fittedModel3 &lt;- glmer(observedResponse ~ 1 + (1|group), 
+                     family = &quot;poisson&quot;, data = testData)
+
+res3 &lt;- simulateResiduals(fittedModel = fittedModel3)
+plot(res3)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>Repare que o gráfico <code>Resíduos ~ Predito</code> (direita) agora é um boxplot porque não há preditores no modelo, apenas o intercepto.</p>
+<p>Mas, se a gente faz o gráfico dos resíduos contra a variável preditora (que a gentes sabe que criou os dados), podemos detectar o problema:</p>
+<pre class="r"><code>plotResiduals(res3, form = testData$Environment1)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Agora a gente vê a falta do ajuste do modelo quanto à variável ambiental, já que os resíduos estão aumentando com o aumento da variável ambiental.</p>
+<p><strong>Conclusão:</strong> sempre verifique os resíduos contra todos os preditores! Não só os que já estão no modelo (ajuda a entender se uma relação linear é suficiente ou não e detectar heterocedasticidade), mas outros que vc tenha e que possam ter algum efeito na sua variável resposta.</p>
+</div>
+</div>
+<div id="exemplo-das-corujas" class="section level1">
+<h1>Exemplo das corujas</h1>
+<p>Estes dados estão disponíveis no pacote <code>glmmTMB</code> (veja o help dos dados <code>?Olws</code> ).</p>
+<p>Vamos ajustar um modelo que segue a hipótese de que existe diferença no número de negociação dos filhotes entre os tratamentos de comida e o sexo do adulto alimentando (pai/mãe).</p>
+<p>Olhando os dados:</p>
+<pre class="r"><code>library(glmmTMB)
+ggplot(Owls, aes(x = FoodTreatment, y = SiblingNegotiation, fill=SexParent)) + 
+  geom_boxplot() +
+  theme_bw()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>O modelo mais simples de todos é um glm poisson (dados de contagem) com interação entre os preditores e um offset para corrigir para o tamanho da ninhada.</p>
+<pre class="r"><code>m1 &lt;- glm(SiblingNegotiation ~ FoodTreatment*SexParent + offset(log(BroodSize)), data=Owls , family = poisson)</code></pre>
+<p><strong>OBS:</strong> Para saber mais sobre o uso de “offsets” nos modelos, <a href="https://stats.stackexchange.com/questions/11182/when-to-use-an-offset-in-a-poisson-regression">essa discussão</a> pode ser útil e esse Preprint pode ajudar a entender melhor quando usar: <a href="https://ecoevorxiv.org/repository/view/7835/">Smith. 2024. Offset or not: guidance on accounting for sampling effort in generalized linear models. EcoEvoRxiv</a></p>
+<p>Calculando os resíduos</p>
+<pre class="r"><code>res &lt;- simulateResiduals(m1)
+plot(res)</code></pre>
+<pre><code>## DHARMa:testOutliers with type = binomial may have inflated Type I error rates for integer-valued distributions. To get a more exact result, it is recommended to re-run testOutliers with type = &#39;bootstrap&#39;. See ?testOutliers for details</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Claramente, há algo de errado neste modelo! Muito provavelmente, problema de sobredispersão, já que uma vez sobredisperso, vários outros testes (KS e outliers) vão dar significativo.</p>
+<p>Olhando o teste de dispersão:</p>
+<pre class="r"><code>testDispersion(res)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa nonparametric dispersion test via sd of residuals fitted vs.
+## 	simulated
+## 
+## data:  simulationOutput
+## dispersion = 5.918, p-value &lt; 2.2e-16
+## alternative hypothesis: two.sided</code></pre>
+<p>Para resolver isso, vamos começar com um modelo misto (como fizemos antes), considerando que os dados são agrupados por ninho (se conhecessemos os dados já teríamos feito isso, mas por motivos didáticos, vamos adicioná-los só agora).</p>
+<pre class="r"><code>m2 &lt;- glmer(SiblingNegotiation ~ FoodTreatment*SexParent + offset(log(BroodSize)) +
+              (1|Nest), data=Owls , family = poisson)
+res2 &lt;- simulateResiduals(m2)
+plot(res2)</code></pre>
+<pre><code>## DHARMa:testOutliers with type = binomial may have inflated Type I error rates for integer-valued distributions. To get a more exact result, it is recommended to re-run testOutliers with type = &#39;bootstrap&#39;. See ?testOutliers for details</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Os resíduos melhoraram, mas ainda parece que algo está errado. O teste de dispersão não deu significativo, mas vamos ver qual o valor do coeficiente de dispersão:</p>
+<pre class="r"><code>testDispersion(res2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa nonparametric dispersion test via sd of residuals fitted vs.
+## 	simulated
+## 
+## data:  simulationOutput
+## dispersion = 1.9418, p-value = 0.072
+## alternative hypothesis: two.sided</code></pre>
+<p>Bom, quase o dobro de dispersão (1,94) do que a esperada para a distrbuição Poisson (1,00). Vamos tentar, então, um modelo com a distribuição Binomial Negativa (geralmente uma das primeiras opções que as pesssoas pensam quando modelos Poisson não se comportam bem).</p>
+<pre class="r"><code>m3 &lt;- glmmTMB(SiblingNegotiation ~ FoodTreatment*SexParent + offset(log(BroodSize)) +
+                (1|Nest), data=Owls , family = nbinom1)
+
+res3 &lt;- simulateResiduals(m3)
+plot(res3)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>Ainda tem algo de errado aqui! Temos agora um problema de subdispersão, menos variância do que o esperado. Mas a Binomial Negativa tem um termo de dispersão que poderia ser flexível o suficiente para corrigir isso. Por quê então?</p>
+<pre class="r"><code>testDispersion(res3)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa nonparametric dispersion test via sd of residuals fitted vs.
+## 	simulated
+## 
+## data:  simulationOutput
+## dispersion = 0.63438, p-value &lt; 2.2e-16
+## alternative hypothesis: two.sided</code></pre>
+<p>Bem, o boxplot de exame dos dados acima não mostrou muito bem, mas o dotplot abaixo indica que existem um bocado e zeros nos dados.</p>
+<pre class="r"><code>ggplot(Owls, aes(x = FoodTreatment, y = SiblingNegotiation, fill=SexParent)) + 
+  geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;, dotsize=0.4, alpha=0.4,
+               position = &quot;dodge&quot;) +
+  theme_bw()</code></pre>
+<pre><code>## Bin width defaults to 1/30 of the range of the data. Pick better value with
+## `binwidth`.</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>De fato, olhando para o banco de dados vemos que 1/4 (~26%) das observações são zeros:</p>
+<pre class="r"><code>sum(Owls$SiblingNegotiation == 0)/nrow(Owls)</code></pre>
+<pre><code>## [1] 0.2604341</code></pre>
+<p>Vamos testar para zero-inflação:</p>
+<pre class="r"><code>testZeroInflation(res3)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre><code>## 
+## 	DHARMa zero-inflation test via comparison to expected zeros with
+## 	simulation under H0 = fitted model
+## 
+## data:  simulationOutput
+## ratioObsSim = 1.2488, p-value = 0.064
+## alternative hypothesis: two.sided</code></pre>
+<p>Parece que temos um problema de zero-inflação, embora apontado como não significativo (mas não se prenda tanto ao valor de p).</p>
+<p>Então parece que o padrão de subdispersão num modelo cuja distribuição corrige para a dispersão (Binomial Negativa) é devido à zero-inflação. Uma razão possível é que o modelo se ajusta à inflação de zeros aumentando o parâmetro de dispersão, mas agora temos menos observações maiores do que o esperado, resultando em subdispersão.</p>
+<p>Ajustando finalmente um modelo com zero inflação:</p>
+<pre class="r"><code>m4 &lt;- glmmTMB(SiblingNegotiation ~ FoodTreatment*SexParent + offset(log(BroodSize)) +
+                (1|Nest), 
+              ziformula = ~ FoodTreatment *SexParent, data=Owls , family = nbinom1 )
+res4 &lt;- simulateResiduals(m4)
+plot(res4)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Apenas para ter certeza sobre usar ou não o modelo que controla zero-inflação podemos fazer uma simples comparação de modelos por AIC</p>
+<pre class="r"><code>bbmle::AICtab(m3,m4, base=T)</code></pre>
+<pre><code>##    AIC    dAIC   df
+## m4 3361.1    0.0 10
+## m3 3400.8   39.7 6</code></pre>
+<p>De fato, um modelo com zero-inflação se ajusta melhor aos dados.</p>
+</div>
+<div id="sugestões-de-estudos" class="section level1">
+<h1>Sugestões de estudos</h1>
+<p>Esse tutorial foi apenas um apanhado das funções e funcionalidades do DHARMa. Para um estudo mais aprofundado, sugiro:</p>
+<ul>
+<li>A <a href="https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html">Vinheta do pacote DHARMa</a> tem outros exemplos e discute com muito mais profundidade as funções, os testes e diagnósticos de modelos.<br />
+</li>
+<li>Exemplos reais também podem ser buscados nos <a href="https://github.com/florianhartig/DHARMa/issues">issues</a> do pacote no GitHub.<br />
+</li>
+<li>Muitas dúvidas sobre o DHARMa e padrões nos resíduos já foram também respondidas no <a href="https://stats.stackexchange.com/">CrossValidated</a>.</li>
+</ul>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>para alguns casos vale apena aumentar o número de simulações<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

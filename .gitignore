@@ -14,3 +14,8 @@ Thumbs.db
 public/* 
 resources/*
 .Rproj.user/*
+static/post/.DS_Store
+static/.DS_Store
+content/post/.DS_Store
+static/post/.DS_Store
+.DS_Store
