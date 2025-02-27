@@ -1,3 +1,0 @@
-"0","#panel.smooth já existe como função no R"
-"0","pairs(swiss, diag.panel = panel.hist, upper.panel = panel.cor,"
-"0","      lower.panel = panel.smooth)"

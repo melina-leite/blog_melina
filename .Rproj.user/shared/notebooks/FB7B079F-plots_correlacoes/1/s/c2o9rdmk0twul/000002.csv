@@ -1,1 +1,0 @@
-"0","pairs(swiss, diag.panel = panel.hist, upper.panel = panel.cor)"

@@ -1,7 +1,0 @@
-"0","#install_github(""melina-leite/rmdformats"")"
-"0","library(knitr)"
-"0","opts_chunk$set("
-"0","  fig.align = ""center"", fig.show = ""hold"", fig.height = 6,"
-"0","  warning = F, message = F, error = F, cache = T"
-"0",")"
-"0","options(formatR.arrow = TRUE, width = 90)"
